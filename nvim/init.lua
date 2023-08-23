@@ -1,64 +1,60 @@
--- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  is_bootstrap = true
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-  vim.cmd [[packadd packer.nvim]]
+vim.o.termguicolors = true
+
+-- Install lazy
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
 vim.api.nvim_set_keymap("i", "jj", "<Esc>", {noremap=false})
-vim.api.nvim_set_keymap("n", "tk", ":bnext<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "tj", ":bprev<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "th", ":bfirst<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "tl", ":blast<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "td", ":bdelete<enter>", {noremap=false})
+-- tabs
+vim.api.nvim_set_keymap("n", "tk", ":tNext<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "tj", ":tprevious<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "th", ":tfirst<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "tl", ":tlast<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "tc", ":tabclose<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "tn", ":tabnew<enter>", {noremap=false})
+-- twilight
+vim.api.nvim_set_keymap("n", "tw", ":Twilight<enter>", {noremap=false})
+-- buffers
+vim.api.nvim_set_keymap("n", "bk", ":bnext<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "bj", ":bprev<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "bh", ":bfirst<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "bl", ":blast<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "bd", ":bdelete<enter>", {noremap=false})
+-- files
 vim.api.nvim_set_keymap("n", "QQ", ":q!<enter>", {noremap=false})
 vim.api.nvim_set_keymap("n", "WW", ":w!<enter>", {noremap=false})
 vim.api.nvim_set_keymap("n", "E", "$", {noremap=false})
 vim.api.nvim_set_keymap("n", "B", "^", {noremap=false})
 vim.api.nvim_set_keymap("n", "TT", ":TransparentToggle<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "tf", ":TodoTelescope<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "st", ":TodoTelescope<CR>", {noremap=true})
 vim.api.nvim_set_keymap("n", "ss", ":noh<CR>", {noremap=true})
-
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
-  {silent = true, noremap = true}
-)
+-- Splits
+vim.api.nvim_set_keymap("n", "<C-W>,", ":vertical resize -10<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<C-W>.", ":vertical resize +10<CR>", {noremap=true})
 vim.keymap.set('n', '<space><space>', "<cmd>set nohlsearch<CR>")
 
-
-vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit -m \"", {noremap=false})
-vim.api.nvim_set_keymap("n", "<leader>gp", ":Git push -u origin HEAD<CR>", {noremap=false})
--- vim.api.nvim_set_keymap("n", "<leader>tt", ":FTermToggle<CR>", {noremap=false})
--- vim.api.nvim_set_keymap("t", "tt", "<C-\\><C-n><C-w>w:FTermToggle<CR>", {noremap=false, silent=true})
-
-require('packer').startup(function(use)
-  use 'tpope/vim-surround'
-  use 'xiyaowong/nvim-transparent'
-  use { 'numToStr/FTerm.nvim',
+require('lazy').setup({
+  'ThePrimeagen/git-worktree.nvim',
+	'chrisbra/csv.vim',
+  'tpope/vim-surround',
+  'xiyaowong/nvim-transparent',
+  {
+    'numToStr/FTerm.nvim',
     config = function()
     local map = vim.api.nvim_set_keymap
     local opts = { noremap = true, silent = true }
-
-    map('n', '<leader>tt', '<CMD>lua require("FTerm").toggle()<CR>', opts)
-    map('t', '<leader>tt', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>', opts)
     require 'FTerm'.setup({
-      blend = 18,
+      blend = 5,
       dimensions = {
         height = 0.90,
         width = 0.90,
@@ -67,9 +63,9 @@ require('packer').startup(function(use)
       }
     })
     end
-  }
+  },
 
-  use {
+  {
     'rmagatti/goto-preview',
     config = function()
       require('goto-preview').setup {
@@ -93,11 +89,11 @@ require('packer').startup(function(use)
         preview_window_title = { enable = true, position = "left" }, -- Whether
       }
     end
-  }
+  },
 
-  use {
+  {
     "folke/trouble.nvim",
-    requires = "nvim-tree/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("trouble").setup {
         -- your configuration comes here
@@ -105,11 +101,11 @@ require('packer').startup(function(use)
         -- refer to the configuration section below
       }
     end
-  }
+  },
 
-  use {
+  {
     "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require("todo-comments").setup {
         -- your configuration comes here
@@ -117,19 +113,18 @@ require('packer').startup(function(use)
         -- refer to the configuration section below
       }
     end
-  }
+  },
 
-  use {
+  {
     "rcarriga/nvim-notify",
     config = function()
       require("notify").setup({
         background_colour = "#000000",
       })
     end
-  }
+  },
 
-
-  use({
+  {
     "folke/noice.nvim",
     config = function()
       require("noice").setup({
@@ -142,7 +137,7 @@ require('packer').startup(function(use)
         -- },
       })
     end,
-    requires = {
+    dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
       -- OPTIONAL:
@@ -150,100 +145,84 @@ require('packer').startup(function(use)
       --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
     }
-  })
+  },
 
-  use({
-      "iamcco/markdown-preview.nvim",
-      run = function() vim.fn["mkdp#util#install"]() end,
-  })
-  use 'ray-x/go.nvim'
-  use 'ray-x/guihua.lua'
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use {
+  'ray-x/go.nvim',
+  'ray-x/guihua.lua',
+  { "catppuccin/nvim", as = "catppuccin" },
+  {
     "windwp/nvim-autopairs",
       config = function() require("nvim-autopairs").setup {} end
-  }
+  },
 
-  -- Package manager
-  use 'wbthomason/packer.nvim'
 
-  use { -- LSP Configuration & Plugins
+  { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    requires = {
+    dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
       'j-hui/fidget.nvim',
-    },
-  }
+    }
+  },
 
-  use { -- Autocompletion
+  { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
-  }
+    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+  },
 
-  use { -- Highlight, edit, and navigate code
+  { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
-    -- run = function()
-    --   pcall(require('nvim-treesitter.install').update { with_sync = true })
-    -- end,
-  }
+    build = function()
+      pcall(require('nvim-treesitter.install').update { with_sync = true })
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    }
+  },
 
-  use { -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  }
+  { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap"} },
+  'theHamsta/nvim-dap-virtual-text',
+  'leoluz/nvim-dap-go',
 
 
   -- Git related plugins
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-rhubarb'
-  use 'lewis6991/gitsigns.nvim'
+  'tpope/vim-fugitive',
+  'tpope/vim-rhubarb',
+  'lewis6991/gitsigns.nvim',
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  'navarasu/onedark.nvim', -- Theme inspired by Atom
+  'nvim-lualine/lualine.nvim', -- Fancier statusline
+  'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
+  'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   -- Fuzzy Finder (files, lsp, etc)
-  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  'ThePrimeagen/harpoon',
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
-
-  -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
-  local has_plugins, plugins = pcall(require, 'custom.plugins')
-  if has_plugins then
-    plugins(use)
-  end
-
-  if is_bootstrap then
-    require('packer').sync()
-  end
-end)
-
--- When we are bootstrapping a configuration, it doesn't
--- make sense to execute the rest of the init.lua.
---
--- You'll need to restart nvim, and then it will work.
-if is_bootstrap then
-  print '=================================='
-  print '    Plugins are being installed'
-  print '    Wait until Packer completes,'
-  print '       then restart nvim'
-  print '=================================='
-  return
-end
-
--- Automatically source and re-compile packer whenever you save this init.lua
-local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', {
-  command = 'source <afile> | PackerCompile',
-  group = packer_group,
-  pattern = vim.fn.expand '$MYVIMRC',
+  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
+  {
+    "folke/twilight.nvim",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
 })
+
+  require('dapui').setup()
+  require('dap-go').setup()
+  require('nvim-dap-virtual-text').setup()
+  vim.fn.sign_define('DapBreakpoint', { text='🔴', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
+  require("telescope").load_extension('harpoon')
+
+  -- worktree settings
+  require('git-worktree').setup()
+  require('telescope').load_extension('git_worktree')
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -255,8 +234,8 @@ vim.o.hlsearch = true
 vim.wo.number = true
 vim.o.relativenumber = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+-- Disable mouse mode
+vim.o.mouse = ''
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -273,8 +252,8 @@ vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
-vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+--vim.cmd [[colorscheme onedark]]
+vim.cmd.colorscheme "catppuccin"
 
 
 --vim.cmd()
@@ -315,7 +294,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'onedark',
     component_separators = '|',
     section_separators = '',
   },
@@ -417,7 +395,6 @@ pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -432,13 +409,15 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>sm', ":Telescope harpoon marks<CR>", { desc = 'Harpoon [M]arks' })
+vim.keymap.set("n", "<Leader>sr", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", silent)
+vim.keymap.set("n", "<Leader>sR", "<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", silent)
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
-  ignore_install = { 'help' },
+  ensure_installed = { 'go', 'lua', 'python', 'rust', 'typescript', 'regex', 'bash', 'markdown', 'markdown_inline', 'kdl' },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -557,7 +536,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'lua_ls', 'gopls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls'  }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -585,7 +564,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require('lspconfig').lua_ls.setup {
+require('lspconfig').luau_lsp.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -608,7 +587,7 @@ require('lspconfig').lua_ls.setup {
     },
   },
 }
-
+--
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
@@ -673,6 +652,41 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 require('go').setup()
 
 
+
+vim.api.nvim_set_keymap("n", "<Leader><tab>", "<Cmd>lua require('telescope.builtin').commands()<CR>", {noremap=false})
+vim.api.nvim_set_keymap("n", "<leader>gc", ":Git commit -m \"", {noremap=false})
+vim.api.nvim_set_keymap("n", "<leader>gp", ":Git push -u origin HEAD<CR>", {noremap=false})
+
+vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+  {silent = true, noremap = true}
+)
+vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+  {silent = true, noremap = true}
+)
+
+-- Debugger
+vim.api.nvim_set_keymap("n", "<leader>dt", ":DapUiToggle<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<leader>dc", ":DapContinue<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dapui').open({reset = true})<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<leader>m", ":lua require('harpoon.mark').add_file()<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<leader>ht", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", {noremap=true})
+
+-- Fterm
+vim.api.nvim_set_keymap("n", "<leader>tt", ":lua require('FTerm').toggle()<CR>", {noremap=true})
+vim.api.nvim_set_keymap("t", "<leader>tt", '<C-\\><C-n>:lua require("FTerm").toggle()<CR>', {noremap=true})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
