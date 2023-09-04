@@ -1,0 +1,10 @@
+font=JetBrains Mono
+ring-color=rgba(68,12,64,0.85)
+
+image=~/.config/swaylock/lockscreen.jpg
+ignore-empty-password
+daemonize
+
+font-size=20
+indicator-radius=500
+

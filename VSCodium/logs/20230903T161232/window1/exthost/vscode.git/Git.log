@@ -1,0 +1,28 @@
+2023-09-03 16:12:34.375 [info] Log level: Info
+2023-09-03 16:12:34.375 [info] Validating found git in: "git"
+2023-09-03 16:12:34.375 [info] Using git "2.42.0" from "git"
+2023-09-03 16:12:34.375 [info] > git rev-parse --show-toplevel [42ms]
+2023-09-03 16:12:34.375 [info] > git rev-parse --git-dir --git-common-dir [2ms]
+2023-09-03 16:12:34.375 [info] Open repository: /home/tom/apps/hyprland-dotfiles
+2023-09-03 16:12:34.375 [info] > git config --get commit.template [1ms]
+2023-09-03 16:12:34.405 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/catppuccin refs/remotes/catppuccin [26ms]
+2023-09-03 16:12:34.412 [info] > git rev-parse --show-toplevel [29ms]
+2023-09-03 16:12:34.454 [info] > git status -z -uall [43ms]
+2023-09-03 16:12:34.482 [info] > git config --get commit.template [17ms]
+2023-09-03 16:12:34.490 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/catppuccin refs/remotes/catppuccin [1ms]
+2023-09-03 16:12:34.532 [info] > git status -z -uall [38ms]
+2023-09-03 16:12:34.851 [info] > git show --textconv :todo [5ms]
+2023-09-03 16:12:34.854 [info] > git ls-files --stage -- /home/tom/apps/hyprland-dotfiles/todo [4ms]
+2023-09-03 16:12:34.928 [info] > git check-ignore -v -z --stdin [4ms]
+2023-09-03 16:12:36.776 [info] > git check-ignore -v -z --stdin [3ms]
+2023-09-03 16:17:04.790 [info] > git show --textconv :MY_READEME.md [4ms]
+2023-09-03 16:17:04.793 [info] > git ls-files --stage -- /home/tom/apps/hyprland-dotfiles/MY_READEME.md [4ms]
+2023-09-03 16:18:23.605 [info] > git config --get commit.template [1ms]
+2023-09-03 16:18:23.610 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/catppuccin refs/remotes/catppuccin [1ms]
+2023-09-03 16:18:23.647 [info] > git status -z -uall [35ms]
+2023-09-03 21:02:54.747 [info] > git config --get commit.template [3ms]
+2023-09-03 21:02:54.747 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/catppuccin refs/remotes/catppuccin [1ms]
+2023-09-03 21:02:54.771 [info] > git status -z -uall [22ms]
+2023-09-03 22:03:17.316 [info] > git config --get commit.template [15ms]
+2023-09-03 22:03:17.318 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/catppuccin refs/remotes/catppuccin [3ms]
+2023-09-03 22:03:17.386 [info] > git status -z -uall [58ms]

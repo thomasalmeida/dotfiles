@@ -1,0 +1,24 @@
+2023-09-04 11:20:15.666 [info] Log level: Info
+2023-09-04 11:20:15.666 [info] Validating found git in: "git"
+2023-09-04 11:20:15.666 [info] Using git "2.42.0" from "git"
+2023-09-04 11:20:15.666 [info] > git rev-parse --show-toplevel [4ms]
+2023-09-04 11:20:15.670 [info] > git rev-parse --git-dir --git-common-dir [1ms]
+2023-09-04 11:20:15.678 [info] Open repository: /home/tom/apps/hyprland-dotfiles
+2023-09-04 11:20:15.693 [info] > git config --get commit.template [8ms]
+2023-09-04 11:20:15.708 [info] > git rev-parse --show-toplevel [2ms]
+2023-09-04 11:20:15.709 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/catppuccin refs/remotes/catppuccin [7ms]
+2023-09-04 11:20:15.779 [info] > git status -z -uall [66ms]
+2023-09-04 11:20:15.792 [info] > git config --get commit.template [1ms]
+2023-09-04 11:20:15.814 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/catppuccin refs/remotes/catppuccin [3ms]
+2023-09-04 11:20:15.853 [info] > git status -z -uall [35ms]
+2023-09-04 11:20:16.205 [info] > git check-ignore -v -z --stdin [4ms]
+2023-09-04 11:20:16.252 [info] > git show --textconv :MY_READEME.md [8ms]
+2023-09-04 11:20:16.259 [info] > git ls-files --stage -- /home/tom/apps/hyprland-dotfiles/MY_READEME.md [7ms]
+2023-09-04 11:20:21.268 [info] > git check-ignore -v -z --stdin [3ms]
+2023-09-04 11:20:22.274 [info] > git show --textconv :todo [4ms]
+2023-09-04 11:20:22.277 [info] > git ls-files --stage -- /home/tom/apps/hyprland-dotfiles/todo [4ms]
+2023-09-04 11:20:24.350 [info] > git check-ignore -v -z --stdin [10ms]
+2023-09-04 11:20:27.393 [info] > git check-ignore -v -z --stdin [3ms]
+2023-09-04 11:20:27.868 [info] > git show --textconv :catppuccin/waybar/config [4ms]
+2023-09-04 11:20:27.871 [info] > git ls-files --stage -- /home/tom/apps/hyprland-dotfiles/catppuccin/waybar/config [3ms]
+2023-09-04 11:20:27.878 [info] > git cat-file -s 3404491d7d8f2b80656635425b923426224c210a [3ms]
