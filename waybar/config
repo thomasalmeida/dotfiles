@@ -9,14 +9,14 @@
     "modules-left": ["custom/logo","wlr/workspaces"],
     "modules-center": ["clock"],
     "modules-right": ["backlight","pulseaudio","pulseaudio#microphone","battery", "tray", "custom/power_btn"],
-    
+
     "hyprland/window": {
         "format": "{}"
     },
 
     "tray": {
-	"icon-size": 18,
-	"spacing": 10
+        "icon-size": 18,
+        "spacing": 10
     },
 
     "custom/logo": {
@@ -45,8 +45,8 @@
 
     "custom/power_btn": {
         "format":"",
-	"tooltip": false,
-	"on-click": "wlogout"
+        "tooltip": false,
+        "on-click": "wlogout"
     },
 
     "clock": {
@@ -57,7 +57,7 @@
     },
 
     "backlight": {
-	"tooltip": false,
+	    "tooltip": false,
         "device": "intel_backlight",
         "format": "{icon} {percent}%",
         "format-icons": ["", "", ""],
@@ -112,11 +112,11 @@
     },
 
     "network": {
-        "interval": 1, 
-        "on-click": "kitty -e nmtui", 
+        "interval": 1,
+        "on-click": "kitty -e nmtui",
         "format-wifi": "<span foreground='#cdd6f4'>說</span> {signalStrength}%",
         "format-ethernet": "<span foreground='#cdd6f4'></span> {ifname}",
         "format-disconnected": "<span foreground='#cdd6f4'>說</span> --",
-        "tooltip-format": "{essid} {ifname}: {ipaddr}" 
-      }
+        "tooltip-format": "{essid} {ifname}: {ipaddr}"
+    }
 }

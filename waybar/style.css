@@ -47,9 +47,9 @@ tooltip label{
 #battery,
 #pulseaudio,
 #tray,
-#custom-power_btn,
 #workspaces,
 #network,
+#custom-power_btn,
 #backlight {
     background: #1e1e2e;
     opacity: 0.8;
@@ -58,6 +58,7 @@ tooltip label{
     margin-top: 5px;
     border: 0px;
 }
+
 #backlight,#custom-logo {
     border-radius: 10px 0px 0px 10px;
     padding-left: 10px;
