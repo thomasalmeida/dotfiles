@@ -2,7 +2,7 @@
 
 - Install requirement packages :  
 ```shell
-yay -S hyprland-git waybar-hyprland wofi dunst kitty swaybg swayidle git vim brightnessctl pavucontrol thunar grim slurp network-manager-applet lf neovim btop neofetch gedit wget curl pulseaudio brave-bin xdg-desktop-portal-hyprland polkit-gnome qt6-wayland
+yay -S hyprland-git waybar-hyprland wofi dunst kitty swaybg swayidle git vim brightnessctl pavucontrol thunar grim slurp network-manager-applet lf neovim btop neofetch gedit wget curl pulseaudio brave-bin xdg-desktop-portal-hyprland polkit-gnome qt6-wayland xdotool
 ```
 - Copy all file to ``` ~/.config/```
 
