@@ -187,7 +187,6 @@ require('lazy').setup({
   'theHamsta/nvim-dap-virtual-text',
   'leoluz/nvim-dap-go',
 
-
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -214,15 +213,15 @@ require('lazy').setup({
   },
 })
 
-  require('dapui').setup()
-  require('dap-go').setup()
-  require('nvim-dap-virtual-text').setup()
-  vim.fn.sign_define('DapBreakpoint', { text='🔴', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
-  require("telescope").load_extension('harpoon')
+require('dapui').setup()
+require('dap-go').setup()
+require('nvim-dap-virtual-text').setup()
+vim.fn.sign_define('DapBreakpoint', { text='🔴', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
+require("telescope").load_extension('harpoon')
 
-  -- worktree settings
-  require('git-worktree').setup()
-  require('telescope').load_extension('git_worktree')
+-- worktree settings
+require('git-worktree').setup()
+require('telescope').load_extension('git_worktree')
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
