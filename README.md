@@ -1,4 +1,8 @@
 ## Installation
+sudo pacman -S git go
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
 
 - Install requirement packages :  
 ```shell
