@@ -59,7 +59,7 @@ tooltip label{
     border: 0px;
 }
 
-#backlight,#custom-logo {
+#backlight, #custom-logo {
     border-radius: 10px 0px 0px 10px;
     padding-left: 10px;
 }

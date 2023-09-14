@@ -94,7 +94,7 @@ setup_yay() {
 # Function to install essential tools
 install_essential_tools() {
     print_msg "blue" "::" "Installing essential tools..."
-    check_and_install wget curl vim neofetch base-devel git fish starship pipewire pipewire-media-session pipewire-alsa pipewire-pulse x86-video-intel
+    check_and_install wget curl vim neofetch base-devel git fish starship pipewire pipewire-media-session pipewire-alsa pipewire-pulse x86-video-intel blueman gtkmm3 jsoncpp libinput libsigc++ wayland-protocols wlroots
     print_msg "green" "->" "Essential tools installed."
 }
 
@@ -367,6 +367,11 @@ for func in "${functions_to_call[@]}"; do
     $func
     error_check "$func"
 done
+
+# Enabling the NetworkManager service for network management
+print_msg "blue" "::" "Enabling NetworkManager service..."
+sudo systemctl enable NetworkManager.service
+print_msg "green" "->" "NetworkManager service enabled."
 
 print_msg "green" "->" "All done! You might need to manually handle additional configurations mentioned in the README that this script didn't cover, especially copying specific files to directories."
 print_msg "blue" "::" "It's recommfied to restart your machine to ensure all changes are applied correctly."
