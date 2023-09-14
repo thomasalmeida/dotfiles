@@ -1,147 +1,234 @@
 #!/bin/bash
 
-# Ensure the script is run as root
-if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
-    exit 1
-fi
+# Utility functions for colored outputs
+print_msg() {
+    # Color codes
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    BLUE='\033[0;34m'
+    NC='\033[0m' # No Color
+
+    local color="$1"
+    local symbol="$2"
+    local msg="$3"
+    
+    case $color in
+        "red")    echo -e "${RED}${symbol} ${msg}${NC}";;
+        "green")  echo -e "${GREEN}${symbol} ${msg}${NC}";;
+        "blue")   echo -e "${BLUE}${symbol} ${msg}${NC}";;
+        *)        echo "${msg}";;
+    esac
+}
+
+# Check if a package is installed
+pkg_is_installed() {
+    yay -Qq $1 &> /dev/null
+    return $?
+}
+
+# Check and install function
+check_and_install() {
+    if pkg_is_installed $1; then
+        print_msg "blue" "::" "$1 is already installed."
+    else
+        yay -S --noconfirm $1
+        if [[ $? -eq 0 ]]; then
+            print_msg "green" "->" "$1 installed successfully."
+        else
+            print_msg "red" "!!" "Error installing $1."
+        fi
+    fi
+}
 
 # Function to handle errors
 error_check() {
     if [[ $? -ne 0 ]]; then
-        echo "An error occurred during the operation: $1. Exiting..."
+        print_msg "red" "!!" "An error occurred during the operation: $1. Exiting..."
         exit 1
     fi
 }
 
 # Function to configure pacman
 configure_pacman() {
-    echo "Configuring pacman..."
-    sed -i 's/#Color/Color/' /etc/pacman.conf
-    sed -i '/#ParallelDownloads = 5/a ParallelDownloads = 10' /etc/pacman.conf
-    sed -i 's/#VerbosePkgLists/ILoveCandy/' /etc/pacman.conf
-    echo "pacman configured successfully."
+    print_msg "blue" "::" "Configuring pacman..."
+    sudo sed -i 's/#Color/Color/' /etc/pacman.conf
+    sudo sed -i '/#ParallelDownloads = 5/a ParallelDownloads = 10' /etc/pacman.conf
+    sudo sed -i 's/#VerbosePkgLists/ILoveCandy/' /etc/pacman.conf
+    print_msg "green" "->" "pacman configured successfully."
 }
 
 # Function to configure systemd-boot
 configure_systemd_boot() {
-    echo "Configuring systemd-boot..."
-    sed -i 's/timeout .*/timeout 0/' /boot/loader/loader.conf
+    print_msg "blue" "::" "Configuring systemd-boot..."
+    sudo sed -i 's/timeout .*/timeout 0/' /boot/loader/loader.conf
     for entry in /boot/loader/entries/*.conf; do
-        sed -i 's/quiet//' "$entry"
+        sudo sed -i 's/quiet//' "$entry"
     done
-    echo "systemd-boot configured successfully."
+    print_msg "green" "->" "systemd-boot configured successfully."
 }
 
 # Function to setup Yay
 setup_yay() {
-    echo "Setting up Yay..."
-    git clone https://aur.archlinux.org/yay.git
-    cd yay || exit
-    makepkg -si --noconfirm
-    cd .. || exit
-    rm -rf yay
-    echo "Yay setup complete."
+    # Install git if ! already installed
+    if ! pacman -Q git > /dev/null 2>&1; then
+        echo "Installing Git..."
+        check_and_install git
+        error_check
+        echo "Git installed successfully."
+    else
+        echo "Git is already installed."
+    fi
+
+    if ! command -v yay &>/dev/null; then
+        git clone https://aur.archlinux.org/yay.git
+        cd yay
+        makepkg -si --noconfirm
+        cd ..
+        rm -rf yay
+        print_msg "green" "->" "Yay installed successfully."
+    else
+        print_msg "blue" "::" "Yay is already installed."
+    fi
 }
 
 # Function to install essential tools
 install_essential_tools() {
-    echo "Installing essential tools..."
-    yay -S --noconfirm wget curl vim neofetch git fish starship pipewire pipewire-media-session pipewire-alsa pipewire-pulse pipewire-jack x86-video-intel
-    echo "Essential tools installed."
+    print_msg "blue" "::" "Installing essential tools..."
+    check_and_install wget curl vim neofetch base-devel git fish starship pipewire pipewire-media-session pipewire-alsa pipewire-pulse x86-video-intel
+    print_msg "green" "->" "Essential tools installed."
 }
 
 # Function to install desktop environment and appearance tools
 install_desktop_env_tools() {
     echo "Installing desktop environment tools and appearance packages..."
-    yay -S --noconfirm hyprland-git waybar-hyprland wofi dunst kitty swaybg swayidle brightnessctl pavucontrol thunar grim slurp network-manager-applet gedit xdg-desktop-portal-hyprland polkit-gnome qt6-wayland xdotool brave-bin
+    check_and_install hyprland-git waybar-hyprland wofi dunst kitty swaybg swayidle brightnessctl pavucontrol thunar grim slurp network-manager-applet gedit xdg-desktop-portal-hyprland polkit-gnome qt6-wayland xdotool brave-bin
     echo "Desktop environment tools and appearance packages installed."
 }
 
 # Function to install multimedia and sound packages
 install_multimedia_tools() {
     echo "Installing multimedia and sound packages..."
-    yay -S --noconfirm pipewire-enable-bluez5
+    check_and_install pipewire-enable-bluez5
     echo "Multimedia and sound packages installed."
 }
 
 # Function to install development tools
 install_dev_tools() {
     echo "Installing development tools..."
-    yay -S --noconfirm docker docker-compose asdf-vm vscodium dbeaver postman-bin git-cola insomnia
+    check_and_install docker docker-compose vscodium dbeaver postman-bin git-cola insomnia
     echo "Development tools installed."
 }
 
 # Function to install fonts
 install_fonts() {
-    echo "Installing fonts..."
-    yay -S --noconfirm ttf-font-awesome
-    mkdir -p ~/.local/share/fonts
-    fc-cache -f -v
-    echo "Fonts installed."
+    print_msg "blue" "::" "Installing fonts..."
+    
+    # Check if fonts are already installed
+    if fc-list | grep -q "Font Awesome"; then
+        print_msg "blue" "::" "Font Awesome is already installed."
+    else
+        check_and_install ttf-font-awesome
+        fc-cache -f -v > /dev/null 2>&1
+        print_msg "green" "->" "Fonts installed."
+    fi
 }
 
 # Function to install utilities
 install_utilities() {
     echo "Installing utilities..."
-    yay -S --noconfirm btop lf
+    check_and_install btop lf
     echo "Utilities installed."
 }
 
 # Function to install extra software
 install_extra_software() {
     echo "Installing extra software..."
-    yay -S --noconfirm zoom virt-manager
+    check_and_install zoom virt-manager
     echo "Extra software installed."
 }
 
 # Function to setup Oh My Fish and theme
 setup_oh_my_fish() {
-    echo "Installing Oh My Fish..."
-    fish -c "curl -L https://get.oh-my.fish | fish"
-    sleep 5
-    fish -c "omf install catppuccin"
-    echo "Oh My Fish and Catppuccin theme installed."
+    print_msg "blue" "::" "Setting up Fish Shell..."
+    chsh -s /usr/bin/fish
+
+    print_msg "blue" "::" "Installing Oh My Fish..."
+
+    # Verify if the omf is installed
+    if ! fish -c "type omf" &>/dev/null; then
+        fish -c "curl -L https://get.oh-my.fish | fish" &>/dev/null
+        sleep 5
+        if fish -c "type omf" &>/dev/null; then
+            print_msg "green" "->" "Oh My Fish installed successfully."
+        else
+            print_msg "red" "!!" "Failed to install Oh My Fish."
+            return 1
+        fi
+    else
+        print_msg "blue" "::" "Oh My Fish is already installed."
+    fi
+
+    # Verify if the theme is installed
+    if fish -c "omf list" | grep -q "catppuccin"; then
+        print_msg "blue" "::" "Catppuccin theme is already installed for Oh My Fish."
+    else
+        fish -c "omf install https://github.com/catppuccin/fish" > /dev/null 2>&1
+        error_check "Installing Catppuccin theme for Oh My Fish"
+        print_msg "green" "->" "Catppuccin theme installed for Oh My Fish."
+    fi
 }
+
 
 # Function to setup ASDF
 setup_asdf() {
-    echo "Setting up ASDF and installing Go, Ruby, and Node..."
-    pacman -S --noconfirm asdf-vm
-    source /opt/asdf-vm/asdf.fish
-    # Go
-    asdf plugin-add go
-    asdf install go latest
-    asdf global go $(asdf list go | tail -1)
-    # Ruby
-    asdf plugin-add ruby
-    asdf install ruby latest
-    asdf global ruby $(asdf list ruby | tail -1)
-    # Node
-    asdf plugin-add nodejs
-    bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-    asdf install nodejs latest
-    asdf global nodejs $(asdf list nodejs | tail -1)
-    echo "Go, Ruby, and Node installed using ASDF."
-}
+    print_msg blue "::" "Setting up ASDF and installing Go, Ruby, and Node..."
 
-# Function to set up Fish Shell and other configurations
-setup_shell() {
-    echo "Setting up Fish Shell..."
-    chsh -s /usr/bin/fish
-    echo "Configuring StarShip..."
-    echo 'starship init fish | source' >> ~/.config/fish/config.fish
-    echo 'set fish_greeting' >> ~/.config/fish/config.fish
-    echo 'neofetch' >> ~/.config/fish/config.fish
-    echo "Configuring ASDF for Fish..."
-    echo 'source /opt/asdf-vm/asdf.fish' >> ~/.config/fish/config.fish
+    # Verify if ASDF is not already installed
+    if ! [ -d "$HOME/.asdf" ]; then
+        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
+        
+        # Add to fish configuration
+        echo "source ~/.asdf/asdf.fish" >> ~/.config/fish/config.fish
+        
+        # Setup completions using symbolic link as per recommendation
+        mkdir -p ~/.config/fish/completions
+        ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
+    else
+        print_msg yellow "!!" "asdf is already installed via Git."
+    fi
+
+    # Install plugins and languages
+    if ! asdf plugin-list | grep -q golang; then
+        asdf plugin-add golang
+        asdf install golang latest
+        latest_version=$(asdf list golang | tail -1)
+        asdf global golang $latest_version
+    fi
+    
+    if ! asdf plugin-list | grep -q ruby; then
+        asdf plugin-add ruby
+        asdf install ruby latest
+        latest_version=$(asdf list ruby | tail -1)
+        asdf global ruby $latest_version
+    fi
+    
+    if ! asdf plugin-list | grep -q nodejs; then
+        asdf plugin-add nodejs
+        bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+        asdf install nodejs latest
+        latest_version=$(asdf list nodejs | tail -1)
+        asdf global nodejs $latest_version
+    fi
+
+    print_msg green "->" "Go, Ruby, and Node installed using ASDF."
 }
 
 # Function to install and configure browser flags
 setup_browser_flags() {
-    yay -S --noconfirm chromium-l10n
+    print_msg "blue" "::" "Making the flag modifications persistent for Chromium, Brave, and VSCodium..."
 
-    echo "Making the flag modifications persistent for Chromium, Brave, and VSCodium..."
+    # Ensure the applications directory exists
+    mkdir -p ~/.local/share/applications/
 
     # For Chromium
     cp /usr/share/applications/chromium.desktop ~/.local/share/applications/
@@ -155,40 +242,111 @@ setup_browser_flags() {
     cp /usr/share/applications/vscodium.desktop ~/.local/share/applications/
     sed -i 's|Exec=/usr/bin/codium --no-sandbox %F|Exec=/usr/bin/codium --no-sandbox --ozone-platform-hint=wayland --force-dark-mode --enable-features=WebUIDarkMode --ignore-gpu-blocklist --enable-gpu-rasterization --enable-zero-copy --gtk-version=4 %F|' ~/.local/share/applications/vscodium.desktop
 
-    echo "Flags added to Chromium, Brave, and VSCodium launchers."
+    print_msg "green" "->" "Flags added to Chromium, Brave, and VSCodium launchers."
 }
+
 
 # Function to install and setup TimeShift
 setup_timeshift() {
-    echo "Installing TimeShift..."
-    yay -S --noconfirm timeshift
-    echo "TimeShift installed."
+    print_msg "blue" "::" "Installing TimeShift..."
+    check_and_install timeshift
 
     # Setting up TimeShift (this is a basic setup, you might want to adjust settings according to your needs)
     sudo timeshift --create --comments "Initial Snapshot" --tags D
-    echo "Initial TimeShift snapshot created."
+    print_msg "green" "->" "Initial TimeShift snapshot created."
 }
+
+# Function to install and configure Git
+setup_git() {
+    print_msg "blue" "::" "Configuring Git..."
+
+    if ! command -v git &>/dev/null; then
+        print_msg "red" "!!" "Git not installed. Exiting..."
+        exit 1
+    fi
+
+    # Check if Git name is already set
+    if [[ -z $(git config --global user.name) ]]; then
+        read -p "Please enter your Git name: " git_name
+        git config --global user.name "$git_name"
+        error_check "Setting up Git name"
+    fi
+
+    # Check if Git email is already set
+    if [[ -z $(git config --global user.email) ]]; then
+        read -p "Please enter your Git email: " git_email
+        git config --global user.email "$git_email"
+        error_check "Setting up Git email"
+    fi
+
+    print_msg "green" "->" "Git has been configured with the provided name and email."
+}
+
+# Function to create symbolic links for configurations
+create_symlinks() {
+    print_msg "blue" "::" "Creating symbolic links for dotfiles configurations..."
+
+    local dotfiles_path="$HOME/dotfiles" # Change to your dotfiles repository path if different
+
+    # List of configurations and their destinations
+    declare -A configs=(
+        ["$dotfiles_path/fish/"]="$HOME/.config/fish/"
+        ["$dotfiles_path/hypr/"]="$HOME/.config/hypr/"
+        ["$dotfiles_path/lf/"]="$HOME/.config/lf/"
+        ["$dotfiles_path/wlogout/"]="$HOME/.config/wlogout/"
+        ["$dotfiles_path/btop/"]="$HOME/.config/btop/"
+        ["$dotfiles_path/icons/"]="$HOME/.config/icons/"
+        ["$dotfiles_path/neofetch/"]="$HOME/.config/neofetch/"
+        ["$dotfiles_path/starship.toml"]="$HOME/.config/starship.toml"
+        ["$dotfiles_path/wofi/"]="$HOME/.config/wofi/"
+        ["$dotfiles_path/dunst/"]="$HOME/.config/dunst/"
+        ["$dotfiles_path/gtk-3.0/"]="$HOME/.config/gtk-3.0/"
+        ["$dotfiles_path/kitty/"]="$HOME/.config/kitty/"
+        ["$dotfiles_path/nvim/"]="$HOME/.config/nvim/"
+        ["$dotfiles_path/swaylock/"]="$HOME/.config/swaylock/"
+        ["$dotfiles_path/waybar/"]="$HOME/.config/waybar/"
+    )
+
+    for src in "${!configs[@]}"; do
+        dest="${configs[$src]}"
+
+        if [[ -e "$dest" ]]; then
+            print_msg "yellow" "!!" "$dest already exists. Skipping..."
+        else
+            ln -s "$src" "$dest"
+            error_check "Linking $src to $dest"
+        fi
+    done
+
+    # For fonts and vscodium
+    if [ ! -e "$HOME/.local/share/fonts" ]; then
+        ln -s "$dotfiles_path/fonts/" "$HOME/.local/share/"
+        error_check "Linking fonts to .local/share/fonts/"
+    else
+        print_msg "blue" "::" ".local/share/fonts link already exists. Skipping."
+    fi
+
+    if [ ! -e "$HOME/.config/VSCodium/User/settings.json" ]; then
+        ln -s "$dotfiles_path/vscode.code-profile" "$HOME/.config/VSCodium/User/settings.json"
+        error_check "Linking vscode.code-profile to VSCodium settings"
+    else
+        print_msg "blue" "::" "VSCodium settings.json link already exists. Skipping."
+    fi
+    }
 
 # Main execution starts here
 
 # Update system
-echo "Updating system..."
-pacman -Syu --noconfirm
+print_msg "blue" "::" "Updating system..."
+yay -Syyu --noconfirm
 error_check
-
-# Install git if not already installed
-if ! command -v git &> /dev/null; then
-    echo "Installing Git..."
-    pacman -S --noconfirm git
-    error_check
-    echo "Git installed successfully."
-fi
 
 # Call functions to perform tasks
 # List of functions to call in order
 functions_to_call=(
     configure_pacman
     configure_systemd_boot
+    setup_git
     setup_asdf
     setup_yay
     install_essential_tools
@@ -199,9 +357,9 @@ functions_to_call=(
     install_utilities
     install_extra_software
     setup_oh_my_fish
-    setup_shell
     setup_browser_flags
     # setup_timeshift
+    create_symlinks
 )
 
 # Loop through the functions and call them
@@ -210,15 +368,5 @@ for func in "${functions_to_call[@]}"; do
     error_check "$func"
 done
 
-# Prompt for Git configuration
-read -p "Please enter your Git name: " git_name
-read -p "Please enter your Git email: " git_email
-
-# Set Git configurations
-error_check git config --global user.name "$git_name"
-error_check git config --global user.email "$git_email"
-
-echo "Git has been configured with the provided name and email."
-
-echo "All done! You might need to manually handle additional configurations mentioned in the README that this script didn't cover, especially copying specific files to directories."
-echo "It's recommended to restart your machine to ensure all changes are applied correctly."
+print_msg "green" "->" "All done! You might need to manually handle additional configurations mentioned in the README that this script didn't cover, especially copying specific files to directories."
+print_msg "blue" "::" "It's recommfied to restart your machine to ensure all changes are applied correctly."
