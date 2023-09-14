@@ -52,7 +52,7 @@ The configuration script performs several tasks to streamline your Arch Linux se
    
    - **Development Tools**: `docker`, `docker-compose`, `asdf-vm`, `vscodium`, `dbeaver`, `postman-bin`, `git-cola`, `insomnia`.
    
-   - **Fonts**: `ttf-font-awesome`.
+   - **Fonts**: `ttf-font-awesome`, `ttf-jetbrains-mono-nerd`.
    
    - **Utilities**: `btop`, `lf`.
    
@@ -64,7 +64,7 @@ The configuration script performs several tasks to streamline your Arch Linux se
 
 5. **Custom Configurations**: Symbolic links are created for custom settings for various applications and utilities from a `dotfiles` directory.
 
-6. **General System Enhancements**: Additional tweaks to refine the system for immediate use.
+6. **General System Enhancements**: Additional tweaks to refine the system for immediate use, including enabling and starting the `NetworkManager` service for improved network management.
 
 7. **Git configuration**: Asks for your Git name and email, and then configures Git with this information.
 

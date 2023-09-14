@@ -123,13 +123,22 @@ install_dev_tools() {
 install_fonts() {
     print_msg "blue" "::" "Installing fonts..."
     
-    # Check if fonts are already installed
+    # Check if Font Awesome is already installed
     if fc-list | grep -q "Font Awesome"; then
         print_msg "blue" "::" "Font Awesome is already installed."
     else
         check_and_install ttf-font-awesome
         fc-cache -f -v > /dev/null 2>&1
-        print_msg "green" "->" "Fonts installed."
+        print_msg "green" "->" "Font Awesome installed."
+    fi
+
+    # Check if JetBrains Mono Nerd is already installed
+    if fc-list | grep -q "JetBrainsMono Nerd Font"; then
+        print_msg "blue" "::" "JetBrains Mono Nerd Font is already installed."
+    else
+        check_and_install ttf-jetbrains-mono-nerd
+        fc-cache -f -v > /dev/null 2>&1
+        print_msg "green" "->" "JetBrains Mono Nerd Font installed."
     fi
 }
 
@@ -368,10 +377,11 @@ for func in "${functions_to_call[@]}"; do
     error_check "$func"
 done
 
-# Enabling the NetworkManager service for network management
-print_msg "blue" "::" "Enabling NetworkManager service..."
+# Enabling and starting the NetworkManager service for network management
+print_msg "blue" "::" "Enabling and starting NetworkManager service..."
 sudo systemctl enable NetworkManager.service
-print_msg "green" "->" "NetworkManager service enabled."
+sudo systemctl start NetworkManager.service
+print_msg "green" "->" "NetworkManager service enabled and started."
 
 print_msg "green" "->" "All done! You might need to manually handle additional configurations mentioned in the README that this script didn't cover, especially copying specific files to directories."
 print_msg "blue" "::" "It's recommfied to restart your machine to ensure all changes are applied correctly."
