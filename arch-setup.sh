@@ -11,7 +11,7 @@ print_msg() {
     local color="$1"
     local symbol="$2"
     local msg="$3"
-    
+
     case $color in
         "red")    echo -e "${RED}${symbol} ${msg}${NC}";;
         "green")  echo -e "${GREEN}${symbol} ${msg}${NC}";;
@@ -122,7 +122,7 @@ install_dev_tools() {
 # Function to install fonts
 install_fonts() {
     print_msg "blue" "::" "Installing fonts..."
-    
+
     # Check if Font Awesome is already installed
     if fc-list | grep -q "Font Awesome"; then
         print_msg "blue" "::" "Font Awesome is already installed."
@@ -213,14 +213,14 @@ setup_asdf() {
         latest_version=$(asdf list golang | tail -1)
         asdf global golang $latest_version
     fi
-    
+
     if ! asdf plugin-list | grep -q ruby; then
         asdf plugin-add ruby
         asdf install ruby latest
         latest_version=$(asdf list ruby | tail -1)
         asdf global ruby $latest_version
     fi
-    
+
     if ! asdf plugin-list | grep -q nodejs; then
         asdf plugin-add nodejs
         bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
@@ -230,6 +230,26 @@ setup_asdf() {
     fi
 
     print_msg green "->" "Go, Ruby, and Node installed using ASDF."
+}
+
+setup_vscodium_from_profile() {
+    local profile_path="dotfiles/VSCodium/tom.code-profile"
+
+    print_msg blue "::" "Setting up VSCodium profile from $profile_path..."
+
+    # User Settings
+    jq -r '.settings' "$profile_path" | jq -r .settings > ~/.config/VSCodium/User/settings.json
+
+    # Keybindings
+    jq -r '.keybindings' "$profile_path" | jq -r .keybindings > ~/.config/VSCodium/User/keybindings.json
+
+    # Extensions
+    extensions=$(jq -r '.extensions[].identifier.id' "$profile_path")
+    for extension in $extensions; do
+        codium --install-extension $extension
+    done
+
+    print_msg green "->" "VSCodium profile set up from $profile_path."
 }
 
 # Function to install and configure browser flags
@@ -327,21 +347,14 @@ create_symlinks() {
         fi
     done
 
-    # For fonts and vscodium
+    # Fonts
     if [ ! -e "$HOME/.local/share/fonts" ]; then
         ln -s "$dotfiles_path/fonts/" "$HOME/.local/share/"
         error_check "Linking fonts to .local/share/fonts/"
     else
         print_msg "blue" "::" ".local/share/fonts link already exists. Skipping."
     fi
-
-    if [ ! -e "$HOME/.config/VSCodium/User/settings.json" ]; then
-        ln -s "$dotfiles_path/vscode.code-profile" "$HOME/.config/VSCodium/User/settings.json"
-        error_check "Linking vscode.code-profile to VSCodium settings"
-    else
-        print_msg "blue" "::" "VSCodium settings.json link already exists. Skipping."
-    fi
-    }
+}
 
 # Main execution starts here
 
@@ -357,6 +370,7 @@ functions_to_call=(
     configure_systemd_boot
     setup_git
     setup_asdf
+    setup_vscodium_from_profile
     setup_yay
     install_essential_tools
     install_desktop_env_tools
