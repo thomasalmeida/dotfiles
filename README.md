@@ -50,7 +50,7 @@ The configuration script performs several tasks to streamline your Arch Linux se
    
    - **Multimedia & Sound Packages**: `pipewire-enable-bluez5`.
    
-   - **Development Tools**: `docker`, `docker-compose`, `asdf-vm`, `vscodium`, `dbeaver`, `postman-bin`, `git-cola`, `insomnia`.
+   - **Development Tools**: `docker`, `docker-compose`, `asdf-vm`, `vscodium`, `dbeaver`, `postman-bin`, `git-cola`, `insomnia`, `jq`.
    
    - **Fonts**: `ttf-font-awesome`, `ttf-jetbrains-mono-nerd`.
    

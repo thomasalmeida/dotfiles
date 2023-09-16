@@ -187,6 +187,18 @@ setup_oh_my_fish() {
     fi
 }
 
+install_jq() {
+    print_msg blue "::" "Checking for jq..."
+
+    # Check if jq is installed
+    if ! command -v jq &> /dev/null; then
+        print_msg yellow "!!" "jq not found, installing..."
+        yay -S jq --noconfirm
+        print_msg green "->" "jq installed."
+    else
+        print_msg green "->" "jq is already installed."
+    fi
+}
 
 # Function to setup ASDF
 setup_asdf() {
@@ -194,8 +206,12 @@ setup_asdf() {
 
     # Verify if ASDF is not already installed
     if ! [ -d "$HOME/.asdf" ]; then
-        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
-        
+        # Get the latest release from GitHub
+        latest_asdf_release=$(curl -s "https://api.github.com/repos/asdf-vm/asdf/releases/latest" | jq -r .tag_name)
+
+        # Clone the latest release
+        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch $latest_asdf_release
+
         # Add to fish configuration
         # echo "source ~/.asdf/asdf.fish" >> ~/.config/fish/config.fish
 
@@ -370,6 +386,7 @@ functions_to_call=(
     configure_pacman
     configure_systemd_boot
     setup_git
+    install_jq
     setup_asdf
     setup_vscodium_from_profile
     setup_yay
