@@ -342,7 +342,7 @@ create_symlinks() {
         ["$dotfiles_path/btop/"]="$HOME/.config/btop/"
         ["$dotfiles_path/icons/"]="$HOME/.config/icons/"
         ["$dotfiles_path/neofetch/"]="$HOME/.config/neofetch/"
-        ["$dotfiles_path/starship.toml"]="$HOME/.config/starship.toml"
+        ["$dotfiles_path/starship/starship.toml"]="$HOME/.config/starship.toml"
         ["$dotfiles_path/wofi/"]="$HOME/.config/wofi/"
         ["$dotfiles_path/dunst/"]="$HOME/.config/dunst/"
         ["$dotfiles_path/gtk-3.0/"]="$HOME/.config/gtk-3.0/"
