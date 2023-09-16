@@ -6,3 +6,4 @@ starship init fish | source
 set fish_greeting
 neofetch
 
+source ~/.asdf/asdf.fish

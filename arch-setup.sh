@@ -197,8 +197,8 @@ setup_asdf() {
         git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
         
         # Add to fish configuration
-        echo "source ~/.asdf/asdf.fish" >> ~/.config/fish/config.fish
-        
+        # echo "source ~/.asdf/asdf.fish" >> ~/.config/fish/config.fish
+
         # Setup completions using symbolic link as per recommendation
         mkdir -p ~/.config/fish/completions
         ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
