@@ -332,6 +332,7 @@ create_symlinks() {
         ["$dotfiles_path/gtk-3.0/"]="$HOME/.config/gtk-3.0/"
         ["$dotfiles_path/kitty/"]="$HOME/.config/kitty/"
         ["$dotfiles_path/nvim/"]="$HOME/.config/nvim/"
+        ["$dotfiles_path/vim/vimrc"]="$HOME/.vimrc"
         ["$dotfiles_path/swaylock/"]="$HOME/.config/swaylock/"
         ["$dotfiles_path/waybar/"]="$HOME/.config/waybar/"
     )
