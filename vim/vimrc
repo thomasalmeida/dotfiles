@@ -3,7 +3,7 @@ set clipboard=unnamedplus
 set cmdheight=1
 set completeopt=menu,menuone,noselect
 set confirm
-" set cursorline
+set cursorline
 set expandtab
 set guifont=Iosevka\ Fixed:h14
 set ignorecase
@@ -14,7 +14,7 @@ set numberwidth=1
 " set omnifunc=
 set pumheight=0
 set relativenumber
-set scroll=4
+" set scroll=4
 set sidescrolloff=4
 set shiftwidth=4
 set showcmd
