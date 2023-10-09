@@ -1,126 +1,200 @@
 {
-    "layer": "top",
-    "position": "top",
-    "mod": "dock",
-    "exclusive": true,
-    "passthrough": false,
-    "gtk-layer-shell": true,
-    "height": 0,
-    "modules-left": ["custom/logo","hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["backlight","pulseaudio","pulseaudio#microphone","battery", "tray", "custom/power_btn"],
-
-    "hyprland/window": {
-        "format": "{}"
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "height": 0,
+  "modules-left": [
+    "custom/logo",
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "custom/spotify"
+  ],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "network",
+    "backlight",
+    "pulseaudio",
+    "pulseaudio#microphone",
+    "idle_inhibitor",
+    "battery",
+    "clock",
+    "tray",
+    "custom/script_launcher"
+  ],
+  "custom/script_launcher": {
+    "format": "\uf121",
+    "return-type": "text",
+    "tooltip": false,
+    "on-click": "~/dotfiles/waybar/scripts/menu.sh"
+  },
+  "custom/spotify": {
+      "format": "  {}",
+      "exec": "~/dotfiles/waybar/scripts/spotify.sh",
+      "exec-if": "pgrep spotify",
+      "on-click": "playerctl -p spotify play-pause",
+      "on-click-right": "spotify --tile",
+      "on-click-middle": "killall spotify",
+      "on-scroll-up": "playerctl -p spotify previous",
+      "on-scroll-down": "playerctl -p spotify next",
+      "interval": 1,
+      "return-type": "json",
+      "escape": true
+  },
+  "hyprland/window": {
+    "format": "{}"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "custom/logo": {
+    "format": "",
+    "on-click": "wofi -w 3 -n --show drun -k '/dev/null'",
+    "tooltip": false
+  },
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "default": "1"
     },
-
-    "tray": {
-        "icon-size": 18,
-        "spacing": 10
+    "on-click": "activate"
+  },
+  "hyprland/submap": {
+    "format": "{}",
+    "tooltip": false
+  },
+  "custom/power_btn": {
+    "format": "⏻",
+    "tooltip": false,
+    "on-click": "wlogout"
+  },
+  "clock": {
+    "format": "{:%A, %B %d, %Y (%R)}  ",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
     },
-
-    "custom/logo": {
-        "format": "",
-        "on-click": "wofi -w 3 -n --show drun -k '/dev/null'",
-        "tooltip": false
-    },
-
-    "hyprland/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "default": "1"
-        },
-        "on-click": "activate"
-    },
-
-    "hyprland/submap": {
-        "format": "{}",
-        "tooltip": false
-    },
-
-    "custom/power_btn": {
-        "format":"",
-        "tooltip": false,
-        "on-click": "wlogout"
-    },
-
-    "clock": {
-        "format": "  {:%d/%m/%Y  %H:%M}",
-        "tooltip": true,
-        "tooltip-format": "{:%A %B %d %Y | %T}",
-        "interval": 1
-    },
-
-    "backlight": {
-	    "tooltip": false,
-        "device": "intel_backlight",
-        "format": "{icon} {percent}%",
-        "format-icons": ["", "", ""],
-        "on-scroll-up": "brightnessctl s +1%",
-        "on-scroll-down": "brightnessctl s 1%-",
-        "min-value": "brightnessctl -n 5%"
-    },
-
-    "battery": {
-        "states": {
-            "good": 95,
-            "warning": 30,
-            "critical": 20
-        },
-        "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
-    },
-
-    "pulseaudio": {
-    	"tooltip": false,
-        "format-bluetooth": "{icon} {volume}%",
-        "format": "{icon} {volume}%",
-        "format-muted": "",
-        "on-click": "pactl -- set-sink-mute @DEFAULT_SINK@ toggle",
-        "on-click-right": "pavucontrol",
-        "on-scroll-up": "pactl -- set-sink-volume @DEFAULT_SINK@ +1%",
-        "on-scroll-down": "pactl -- set-sink-volume @DEFAULT_SINK@ -1%",
-        "scroll-step": 1,
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        }
-    },
-
-    "pulseaudio#microphone": {
-    	"tooltip": false,
-        "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": "",
-        "on-click": "pactl -- set-source-mute @DEFAULT_SOURCE@ toggle",
-        "on-scroll-down": "pactl -- set-source-volume @DEFAULT_SOURCE@ -1%",
-        "on-scroll-up": "pactl -- set-source-volume @DEFAULT_SOURCE@ +1%",
-        "scroll-step": 1
-    },
-
-    "network": {
-        "interval": 1,
-        "on-click": "kitty -e nmtui",
-        "format-wifi": "<span foreground='#cdd6f4'>說</span> {signalStrength}%",
-        "format-ethernet": "<span foreground='#cdd6f4'></span> {ifname}",
-        "format-disconnected": "<span foreground='#cdd6f4'>說</span> --",
-        "tooltip-format": "{essid} {ifname}: {ipaddr}"
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-middle": "tz_up",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
     }
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "backlight": {
+    "tooltip": false,
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "",
+      "",
+      ""
+    ],
+    "on-scroll-up": "brightnessctl s +1%",
+    "on-scroll-down": "brightnessctl s 1%-",
+    "min-value": "brightnessctl -n 5%"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{time} {icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "pulseaudio": {
+    "tooltip": false,
+    "format-bluetooth": "{icon} {volume}%",
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "on-click": "pactl -- set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "pactl -- set-sink-volume @DEFAULT_SINK@ +1%",
+    "on-scroll-down": "pactl -- set-sink-volume @DEFAULT_SINK@ -1%",
+    "scroll-step": 1,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "pulseaudio#microphone": {
+    "tooltip": false,
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": "",
+    "on-click": "pactl -- set-source-mute @DEFAULT_SOURCE@ toggle",
+    "on-scroll-down": "pactl -- set-source-volume @DEFAULT_SOURCE@ -1%",
+    "on-scroll-up": "pactl -- set-source-volume @DEFAULT_SOURCE@ +1%",
+    "scroll-step": 1
+  },
+  "cpu": {
+    "format": " {usage}%"
+  },
+  "memory": {
+    "format": " {used}/{total}"
+  },
+  "network": {
+    "interval": 1,
+    "format-wifi": "<span foreground='#cdd6f4'>說</span> {signalStrength}%",
+    "format-ethernet": "<span foreground='#cdd6f4'></span> {ifname}",
+    "format-disconnected": "<span foreground='#cdd6f4'>說</span> --",
+    "tooltip-format": "{essid} {ifname}: {ipaddr}"
+  }
 }

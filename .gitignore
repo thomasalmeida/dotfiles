@@ -1,3 +1,5 @@
 fish/completions/asdf.fish
 
 nvim/lazy-lock.json
+
+waybar/script-launcher/.speedtest_results
