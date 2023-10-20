@@ -37,10 +37,10 @@
       "exec": "~/dotfiles/waybar/scripts/spotify.sh",
       "exec-if": "pgrep spotify",
       "on-click": "playerctl -p spotify play-pause",
-      "on-click-right": "spotify --tile",
-      "on-click-middle": "killall spotify",
-      "on-scroll-up": "playerctl -p spotify previous",
-      "on-scroll-down": "playerctl -p spotify next",
+      "on-click-middle": "playerctl -p spotify previous",
+      "on-click-right": "playerctl -p spotify next",
+      "on-scroll-up": "killall spotify",
+      "on-scroll-down": "spotify --tile",
       "interval": 1,
       "return-type": "json",
       "escape": true
@@ -185,12 +185,15 @@
     "scroll-step": 1
   },
   "cpu": {
+    "on-click": "kitty -e btop",
     "format": " {usage}%"
   },
   "memory": {
+    "on-click": "kitty -e btop",
     "format": " {used}/{total}"
   },
   "network": {
+    "on-click": "kitty -e btop",
     "interval": 1,
     "format-wifi": "<span foreground='#cdd6f4'>說</span> {signalStrength}%",
     "format-ethernet": "<span foreground='#cdd6f4'></span> {ifname}",

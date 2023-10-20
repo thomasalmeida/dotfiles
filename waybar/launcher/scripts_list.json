@@ -1,0 +1,56 @@
+[
+  {
+    "icon": "",
+    "description": "Speedtest",
+    "path": "network/speedtest.sh",
+    "sudo": "no"
+  },
+  {
+    "icon": "🔔",
+    "description": "Toggle Dunst",
+    "path": "ui/toggle_dunst.sh",
+    "sudo": "no"
+  },
+  {
+    "icon": "✋",
+    "description": "Halt Containers",
+    "path": "docker/halt_containers_docker.sh",
+    "sudo": "no"
+  },
+  {
+    "icon": "🔗",
+    "description": "VPN Launcher",
+    "path": "network/vpn_launcher.sh",
+    "sudo": "no"
+  },
+  {
+    "icon": "",
+    "description": "VPN Disconnect All",
+    "path": "network/vpn_disconnect_all.sh",
+    "sudo": "no"
+  },
+  {
+    "icon": "⏻",
+    "description": "Power Button",
+    "path": "system/wlogout.sh",
+    "sudo": "no"
+  },
+  {
+    "icon": "⌨️",
+    "description": "Keyboard Layout Switcher",
+    "path": "ui/keyboard_layout_switcher.sh",
+    "sudo": "no"
+  },
+  {
+    "icon": "🧹",
+    "description": "Purge Orphan Packages",
+    "path": "system/purge_orphan_packages.sh",
+    "sudo": "yes"
+  },
+  {
+    "icon": "🐋",
+    "description": "Toggle Docker",
+    "path": "docker/toggle_docker_service.sh",
+    "sudo": "yes"
+  }
+]

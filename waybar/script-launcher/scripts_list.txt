@@ -1,7 +1,0 @@
- , Speedtest, speedtest.sh
- , Toggle Dunst, toggle_dunst.sh
- , Stop Docker, stop_docker.sh
- , VPN Launcher, vpn_launcher.sh
- , VPN Disconnect All, vpn_disconnect_all.sh
- , Power Button, wlogout.sh
- , Keyboard Layout Switcher, keyboard_layout_switcher.sh

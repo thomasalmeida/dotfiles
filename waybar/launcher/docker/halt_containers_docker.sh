@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# stop_docker.sh
-# Script to stop all Docker instances and free up resources
+# halt_containers_docker.sh
+# Script to stop all Docker instances
 
 # Notify the user that Docker instances are stopping
 notify-send "Docker" "Stopping all Docker instances..."

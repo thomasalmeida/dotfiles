@@ -1,18 +1,24 @@
 #!/bin/bash
 
 # Define the directory containing the scripts
-SCRIPT_DIR=~/dotfiles/waybar/script-launcher/scripts
+SCRIPT_DIR=$HOME/dotfiles/waybar/launcher
 
 # Define the path to the scripts list
-SCRIPTS_LIST=~/dotfiles/waybar/script-launcher/scripts_list.txt
+SCRIPTS_LIST=$SCRIPT_DIR/scripts_list.json
 
 # Use wofi to select a script from the available scripts in the directory
-# and store the selected script name in the variable SCRIPT
-SELECTED=$(awk -F, '{print $1 $2}' $SCRIPTS_LIST | wofi -w 3 -n --prompt="Select a script to run:" --dmenu)
+SELECTED=$(jq -r '.[] | .icon + " " + .description' $SCRIPTS_LIST | wofi -w 1 -n --prompt="Select a script to run:" --dmenu)
 
 # Check if a script was selected
 if [ -n "$SELECTED" ]; then
-  # Extract the script filename from the selection and execute it
-  SCRIPT_NAME=$(awk -F, -v sel="$SELECTED" '$1 $2 == sel {print $3}' $SCRIPTS_LIST | xargs)
-  $SCRIPT_DIR/$SCRIPT_NAME
+  # Extract the script path and sudo requirement from the selection
+  SCRIPT_PATH=$(jq -r --arg sel "$SELECTED" '.[] | select(.icon + " " + .description == $sel) | .path' $SCRIPTS_LIST)
+  REQUIRES_SUDO=$(jq -r --arg sel "$SELECTED" '.[] | select(.icon + " " + .description == $sel) | .sudo' $SCRIPTS_LIST)
+
+  # If the script requires sudo, prefix the command with pkexec
+  if [ "$REQUIRES_SUDO" == "yes" ]; then
+    pkexec bash -c "$SCRIPT_DIR/$SCRIPT_PATH"
+  else
+    $SCRIPT_DIR/$SCRIPT_PATH
+  fi
 fi

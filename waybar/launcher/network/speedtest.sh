@@ -13,7 +13,7 @@ TIMESTAMP=$(date +"%m/%d/%Y %H:%M:%S")
 notify-send "Speedtest Results" "Download: $DOWNLOAD Mbps\nUpload: $UPLOAD Mbps\n$TIMESTAMP"
 
 # Define the directory where the results will be stored
-RESULT_DIR=~/dotfiles/waybar/scripts/menu/.speedtest_results
+RESULT_DIR=~/dotfiles/waybar/launcher/network/.speedtest_results
 # Ensure the result directory exists
 mkdir -p "$RESULT_DIR"
 # Append the current result to a file named with the current date (YYYYMMDD.txt format)
