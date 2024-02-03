@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Installing multimedia and sound packages
 print_msg "blue" "::" "Installing multimedia and sound packages..."
 multimedia_tools=(

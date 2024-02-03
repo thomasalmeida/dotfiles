@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Setting up Oh My Fish and theme
 print_msg "blue" "::" "Setting up Fish Shell..."
 chsh -s /usr/bin/fish

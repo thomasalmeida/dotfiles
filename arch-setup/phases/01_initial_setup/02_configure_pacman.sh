@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Configuring pacman
 print_msg "blue" "::" "Configuring pacman..."
 sudo sed -i 's/#Color/Color/' /etc/pacman.conf

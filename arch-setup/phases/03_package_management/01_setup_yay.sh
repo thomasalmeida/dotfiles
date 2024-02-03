@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Setting up Yay (Yet Another Yaourt)
 print_msg "blue" "::" "Setting up Yay..."
 if ! command -v yay &>/dev/null; then

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Installing fonts
 print_msg "blue" "::" "Installing fonts..."
 

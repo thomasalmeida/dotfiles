@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Installing development tools
 print_msg "blue" "::" "Installing development tools..."
 dev_tools=(

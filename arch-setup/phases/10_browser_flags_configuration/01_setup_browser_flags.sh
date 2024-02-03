@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Configuring browser flags
 print_msg "blue" "::" "Making the flag modifications persistent for Chromium, Brave, and VSCodium..."
 mkdir -p ~/.local/share/applications/

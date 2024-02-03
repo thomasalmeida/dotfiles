@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Configure VSCodium
 print_msg "blue" "::" "Configuring VSCodium..."
 

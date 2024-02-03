@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Setting up ASDF and installing Go, Ruby, and Node
 print_msg "blue" "::" "Setting up ASDF and installing Go, Ruby, and Node..."
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Updating the system
 print_msg "blue" "::" "Updating system..."
 sudo pacman -Syyu --noconfirm

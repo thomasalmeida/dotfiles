@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Installing essential tools
 print_msg "blue" "::" "Installing essential tools..."
 essential_tools=(

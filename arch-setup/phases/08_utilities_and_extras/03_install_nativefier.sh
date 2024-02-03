@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Install Nativefier
 print_msg "blue" "::" "Installing Nativefier..."
 check_and_install "npm"

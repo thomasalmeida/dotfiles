@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Creating symbolic links for configurations
 print_msg "blue" "::" "Creating symbolic links for dotfiles configurations..."
 local dotfiles_path="$HOME/dotfiles"

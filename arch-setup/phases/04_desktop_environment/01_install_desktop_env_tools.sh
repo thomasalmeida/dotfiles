@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Installing desktop environment tools and appearance packages
 print_msg "blue" "::" "Installing desktop environment tools and appearance packages..."
 desktop_env_tools=(

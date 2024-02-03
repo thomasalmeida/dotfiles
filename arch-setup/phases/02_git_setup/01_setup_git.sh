@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Installing and configuring Git
 print_msg "blue" "::" "Installing and configuring Git..."
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions globally
+source ./common/common_functions.sh
+
 # Ask the user if they have an NVIDIA GPU
 read -p "Do you have an NVIDIA GPU? (yes/no): " has_nvidia
 
