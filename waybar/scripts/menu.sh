@@ -15,10 +15,5 @@ if [ -n "$SELECTED" ]; then
   SCRIPT_PATH=$(jq -r --arg sel "$SELECTED" '.[] | select(.icon + " " + .description == $sel) | .path' $SCRIPTS_LIST)
   REQUIRES_SUDO=$(jq -r --arg sel "$SELECTED" '.[] | select(.icon + " " + .description == $sel) | .sudo' $SCRIPTS_LIST)
 
-  # If the script requires sudo, prefix the command with pkexec
-  if [ "$REQUIRES_SUDO" == "yes" ]; then
-    pkexec bash -c "$SCRIPT_DIR/$SCRIPT_PATH"
-  else
-    $SCRIPT_DIR/$SCRIPT_PATH
-  fi
+  $SCRIPT_DIR/$SCRIPT_PATH
 fi

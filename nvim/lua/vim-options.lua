@@ -1,8 +1,12 @@
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
 vim.cmd("set clipboard+=unnamedplus")
+vim.cmd("set cursorline")
+vim.cmd("set expandtab")
+vim.cmd("set scrolloff=8")
+vim.cmd("set shiftwidth=2")
+vim.cmd("set signcolumn=yes")
+vim.cmd("set smartindent")
+vim.cmd("set softtabstop=2")
+vim.cmd("set tabstop=2")
 vim.g.mapleader = " "
 
 -- Navigate vim panes better
@@ -19,8 +23,8 @@ vim.keymap.set('n', '<leader>vs', ':vsplit<CR>')
 vim.keymap.set('n', '<leader>ss', ':split<CR>')
 
 -- Quick save and quit keybindings
-vim.keymap.set('n', 'QQ', ':quit<CR>')
-vim.keymap.set('n', 'WW', ':write<CR>')
+vim.keymap.set('n', '<leader>qq', ':quit<CR>')
+vim.keymap.set('n', '<leader>ww', ':write<CR>')
 
 -- Buffer navigation shortcuts
 vim.keymap.set('n', '<leader>bn', ':bnext<CR>')
@@ -45,3 +49,10 @@ vim.keymap.set('v', '<leader>y', '"+y')
 -- Paste from the system clipboard
 vim.keymap.set('n', '<leader>p', '"+p')
 vim.keymap.set('v', '<leader>p', '"+p')
+
+-- Ctrl-y Moves screen up one line
+-- Ctrl-e Moves screen down one line
+-- Ctrl-u Moves cursor & screen up ½ page
+-- Ctrl-d Moves cursor & screen down ½ page
+-- Ctrl-b Moves screen up one page, cursor to last line
+-- Ctrl-f Moves screen down one page, cursor to first line

@@ -24,6 +24,7 @@
     "battery",
     "clock",
     "tray",
+    "custom/docker",
     "custom/script_launcher"
   ],
   "custom/script_launcher": {
@@ -31,6 +32,13 @@
     "return-type": "text",
     "tooltip": false,
     "on-click": "~/dotfiles/waybar/scripts/menu.sh"
+  },
+  "custom/docker": {
+    "exec": "systemctl is-active --quiet docker && echo '🐳' || echo ''",
+    "interval": 30,
+    "format": "{}",
+    "tooltip": false,
+    "on-click": "kitty sh -c 'docker ps; echo; echo Press Enter to close...; read'"
   },
   "custom/spotify": {
       "format": "  {}",
@@ -69,6 +77,7 @@
       "7": "7",
       "8": "8",
       "9": "9",
+      "10": "X",
       "default": "1"
     },
     "on-click": "activate"

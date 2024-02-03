@@ -12,4 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("vim-options")
+-- require("session-management")
+require("whitespace-cleanup")
 require("lazy").setup("plugins")

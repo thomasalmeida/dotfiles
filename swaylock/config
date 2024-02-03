@@ -1,29 +1,33 @@
-image=~/dotfiles/swaylock/lockscreen.jpg
-color=282a36
-inside-color=1F202A
-line-color=1F202A
-ring-color=bd93f9
-text-color=f8f8f2
+daemonize
+show-failed-attempts
 
-layout-bg-color=1F202A
-layout-text-color=f8f8f2
+# Add an image as a background. You need to disable screenshots above
+image=~/.config/swaylock/lockscreen.jpg
 
-inside-clear-color=6272a4
-line-clear-color=1F202A
-ring-clear-color=6272a4
-text-clear-color=1F202A
+color=1f1d2e80
+font="Fira Code Medium"
+indicator-caps-lock
+indicator-radius=200
+indicator-thickness=20
 
-inside-ver-color=bd93f9
-line-ver-color=1F202A
-ring-ver-color=bd93f9
-text-ver-color=1F202A
-
-inside-wrong-color=ff5555
-line-wrong-color=1F202A
-ring-wrong-color=ff5555
-text-wrong-color=1F202A
-
-bs-hl-color=ff5555
-key-hl-color=50fa7b
-
-text-caps-lock-color=f8f8f2
+bs-hl-color=ffffff
+ignore-empty-password
+inside-clear-color=ffffff
+inside-color=000000
+inside-ver-color=000000
+inside-wrong-color=000000
+key-hl-color=ff0000
+line-clear-color=00ff00
+line-color=1f1d2e
+line-ver-color=0000ff
+line-wrong-color=000000
+ring-clear-color=0ffff0
+ring-color=191724
+ring-ver-color=2777ff
+ring-wrong-color=ff8000
+separator-color=00000000
+text-caps-lock-color=ffffff
+text-clear-color=000000
+text-color=e0def4
+text-ver-color=ffffff
+text-wrong-color=ff0000

@@ -27,12 +27,12 @@ tooltip label {
 
 #workspaces button {
   padding: 5px;
-  color: #313244;
+  color: #a6adc8;
   margin-right: 5px;
 }
 
 #workspaces button.active {
-  color: #a6adc8;
+  color: #fad89c;
 }
 
 #workspaces button:hover {
@@ -42,6 +42,7 @@ tooltip label {
 }
 
 #custom-script_launcher,
+#custom-docker,
 #custom-spotify,
 #idle_inhibitor,
 #custom-logo,
@@ -64,7 +65,7 @@ tooltip label {
   border: 0px;
 }
 
-#custom-spotify {
+#custom-spotify, #custom-docker {
   border-radius: 10px;
   margin-left: 10px;
   padding-left: 10px;

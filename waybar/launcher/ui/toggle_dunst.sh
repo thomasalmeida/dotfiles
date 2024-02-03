@@ -4,11 +4,17 @@
 # Script to toggle dunst (Do Not Disturb notification)
 
 # Check if dunst is running
-if dunstctl is-paused = false; then
-  notify-send "Notifications" "Do Not Disturb: ON"
-  sleep 2
-else
-  notify-send "Notifications" "Do Not Disturb: OFF"
-fi
+case $(dunstctl is-paused) in
+    true)
+      dunstctl history-clear
+      dunstctl close-all
 
-dunstctl set-paused toggle
+      dunstctl set-paused toggle
+      notify-send "Do Not Disturb" "Notifications ON"
+      ;;
+    false)
+      notify-send "Do Not Disturb" "Notifications OFF"
+      sleep 1
+      dunstctl set-paused toggle
+      ;;
+esac

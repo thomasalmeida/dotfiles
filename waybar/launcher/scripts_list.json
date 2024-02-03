@@ -2,55 +2,41 @@
   {
     "icon": "",
     "description": "Speedtest",
-    "path": "network/speedtest.sh",
-    "sudo": "no"
+    "path": "network/speedtest.sh"
   },
   {
     "icon": "🔔",
     "description": "Toggle Dunst",
-    "path": "ui/toggle_dunst.sh",
-    "sudo": "no"
+    "path": "ui/toggle_dunst.sh"
   },
   {
     "icon": "✋",
     "description": "Halt Containers",
-    "path": "docker/halt_containers_docker.sh",
-    "sudo": "no"
+    "path": "docker/halt_containers_docker.sh"
   },
   {
     "icon": "🔗",
     "description": "VPN Launcher",
-    "path": "network/vpn_launcher.sh",
-    "sudo": "no"
+    "path": "network/vpn_launcher.sh"
   },
   {
     "icon": "",
     "description": "VPN Disconnect All",
-    "path": "network/vpn_disconnect_all.sh",
-    "sudo": "no"
+    "path": "network/vpn_disconnect_all.sh"
   },
   {
     "icon": "⏻",
     "description": "Power Button",
-    "path": "system/wlogout.sh",
-    "sudo": "no"
+    "path": "system/wlogout.sh"
   },
   {
     "icon": "⌨️",
     "description": "Keyboard Layout Switcher",
-    "path": "ui/keyboard_layout_switcher.sh",
-    "sudo": "no"
-  },
-  {
-    "icon": "🧹",
-    "description": "Purge Orphan Packages",
-    "path": "system/purge_orphan_packages.sh",
-    "sudo": "yes"
+    "path": "ui/keyboard_layout_switcher.sh"
   },
   {
     "icon": "🐋",
     "description": "Toggle Docker",
-    "path": "docker/toggle_docker_service.sh",
-    "sudo": "yes"
+    "path": "docker/toggle_docker_service.sh"
   }
 ]
