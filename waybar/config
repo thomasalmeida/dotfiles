@@ -38,7 +38,7 @@
     "interval": 30,
     "format": "{}",
     "tooltip": false,
-    "on-click": "kitty sh -c 'docker ps; echo; echo Press Enter to close...; read'"
+    "on-click": "$(head -n 1 ~/dotfiles/.settings/terminal.sh) --title 'FloatingTerminal' --command bash -c '~/dotfiles/waybar/scripts/docker-ps.sh'"
   },
   "custom/spotify": {
       "format": "  {}",
@@ -194,15 +194,15 @@
     "scroll-step": 1
   },
   "cpu": {
-    "on-click": "kitty -e btop",
+    "on-click": "$(head -n 1 ~/dotfiles/.settings/terminal.sh) --command btop",
     "format": " {usage}%"
   },
   "memory": {
-    "on-click": "kitty -e btop",
+    "on-click": "$(head -n 1 ~/dotfiles/.settings/terminal.sh) --command btop",
     "format": " {used}/{total}"
   },
   "network": {
-    "on-click": "kitty -e btop",
+    "on-click": "$(head -n 1 ~/dotfiles/.settings/terminal.sh) --command btop",
     "interval": 1,
     "format-wifi": "<span foreground='#cdd6f4'>說</span> {signalStrength}%",
     "format-ethernet": "<span foreground='#cdd6f4'></span> {ifname}",
