@@ -63,7 +63,7 @@ The configuration script is organized into modular phases, each performing speci
 The script installs a variety of applications and packages, categorized as follows:
 
 - **Essential Tools**: wget, curl, vim, neofetch, git, fish, starship, pipewire, pipewire-media-session, pipewire-alsa, pipewire-pulse, pipewire-jack, x86-video-intel.
-- **Desktop Environment Tools**: hyprland-git, waybar-hyprland, wofi, dunst, kitty, swaybg, swayidle, brightnessctl, pavucontrol, thunar, grim, slurp, network-manager-applet, gedit, xdg-desktop-portal-hyprland, polkit-gnome, qt6-wayland, xdotool, brave-bin.
+- **Desktop Environment Tools**: hyprland-git, waybar-hyprland, wofi, dunst, alacritty, swaybg, swayidle, brightnessctl, pavucontrol, thunar, grim, slurp, network-manager-applet, gedit, xdg-desktop-portal-hyprland, polkit-gnome, qt6-wayland, xdotool, brave-bin.
 - **Multimedia and Sound**: pipewire-enable-bluez5.
 - **Development Tools**: docker, docker-compose, asdf-vm, vscodium, dbeaver, postman-bin, git-cola, jq.
 - **Fonts**: ttf-font-awesome, ttf-jetbrains-mono-nerd.

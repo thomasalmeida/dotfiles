@@ -13,7 +13,7 @@ desktop_env_tools=(
   gedit
   grim
   hyprland-git
-  kitty
+  alacritty
   network-manager-applet
   pavucontrol
   polkit-gnome
