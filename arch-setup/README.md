@@ -67,7 +67,7 @@ The script installs a variety of applications and packages, categorized as follo
 - **Multimedia and Sound**: pipewire-enable-bluez5.
 - **Development Tools**: docker, docker-compose, asdf-vm, vscodium, dbeaver, postman-bin, git-cola, jq.
 - **Fonts**: ttf-font-awesome, ttf-jetbrains-mono-nerd.
-- **Utilities**: btop, lf.
+- **Utilities**: btop.
 - **Additional Software**: zoom, virt-manager.
 
 ## Feedback and Contributions
