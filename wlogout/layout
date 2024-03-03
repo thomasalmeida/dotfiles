@@ -24,7 +24,7 @@
 }
 {
     "label" : "lock",
-    "action" : "swaylock -C ~/.config/swaylock/config",
+    "action" : "sleep 1; hyprlock",
     "text" : "Lock",
     "keybind" : "l"
 }

@@ -20,7 +20,8 @@ desktop_env_tools=(
   qt6-wayland
   slurp
   swaybg
-  swayidle
+  hypridle
+  hyprlock
   thunar
   waybar
   wofi
