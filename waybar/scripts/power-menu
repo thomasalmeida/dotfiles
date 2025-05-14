@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Options for the power menu with icons
+options=" Shutdown\n Reboot\n Logout\n Suspend\n Lock"
+
+# Display Rofi menu with icons and capture the selected option
+selected=$(echo -e "$options" | rofi -dmenu -p "Power Menu" -show-icons)
+
+# Extract the text part after the icon for matching
+selected_text=$(echo "$selected" | cut -d ' ' -f 2-)
+
+# Execute the corresponding command based on selection
+case "$selected_text" in
+    "Shutdown")
+        systemctl poweroff
+        ;;
+    "Reboot")
+        systemctl reboot
+        ;;
+    "Logout")
+        hyprctl dispatch exit
+        ;;
+    "Suspend")
+        hyprlock & sleep 1; systemctl suspend
+        ;;
+    "Lock")
+        hyprlock
+        ;;
+esac

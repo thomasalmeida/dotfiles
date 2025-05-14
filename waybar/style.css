@@ -1,0 +1,154 @@
+@import "themes/Rose-Pine.css";
+
+* {
+    font-family: "Symbols Nerd Font Mono", "0xProto";
+    font-size: 13px;
+    min-height: 15px;
+    border-radius: 0px;
+    transition: background-color 0.5s;
+}
+
+window#waybar {
+    background-color: @bg;
+    border-bottom: 1px solid @border;
+    margin: 0;
+    padding: 0;
+}
+
+#custom-apps,
+#workspaces,
+#clock,
+#pulseaudio,
+#tray,
+#network,
+#bluetooth,
+#cpu,
+#memory,
+#temperature,
+#battery,
+#backlight,
+#custom-notifications,
+#custom-docker,
+#custom-spotify,
+#custom-keyboard-layout,
+#custom-power {
+    background: @surface;
+    color: @text;
+    margin: 0 1px;
+    padding: 0 4px;
+    border: 1px solid @highlightMed;
+}
+
+#pulseaudio#input {
+    color: @rose;
+}
+#pulseaudio#output {
+    color: @iris;
+}
+#backlight {
+    color: @gold;
+}
+#cpu {
+    color: @love;
+}
+#memory {
+    color: @pine;
+}
+#temperature {
+    color: @foam;
+}
+#network {
+    color: @foam;
+}
+#bluetooth {
+    color: @iris;
+}
+#battery {
+    color: @gold;
+}
+#custom-notifications {
+    color: @iris;
+}
+#clock {
+    color: @text;
+    font-weight: bold;
+}
+#custom-spotify {
+    color: @iris;
+}
+#custom-keyboard-layout {
+    color: @pine;
+}
+
+#workspaces {
+    background: transparent;
+    padding: 0;
+    margin: 0 2px;
+    border: none;
+}
+
+#workspaces button {
+    color: @muted;
+    background: transparent;
+    padding: 0 8px;
+    border: 1px solid transparent;
+    transition: color 0.2s ease;
+    font-size: 14px;
+}
+
+#workspaces button.active {
+    color: @foam;
+    background: @highlightMed;
+    border: 1px solid @pine;
+    border-radius: 1px;
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: @highlightHigh;
+    box-shadow: none;
+}
+
+#custom-docker {
+    color: @foam;
+}
+#custom-docker.docker-active {
+    color: @pine;
+}
+#custom-docker.docker-inactive {
+    color: @muted;
+}
+
+.warning,
+.critical {
+    animation: blink_red 1s linear infinite alternate;
+}
+
+@keyframes blink_red {
+    to {
+        background-color: @love;
+        color: @base;
+    }
+}
+
+#custom-apps {
+    background: @foam;
+    color: @base;
+    padding: 0 5px;
+    border: none;
+}
+
+#tray {
+    padding: 0 2px;
+    border-left: none;
+}
+
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#battery,
+#pulseaudio-output,
+#pulseaudio-input {
+    min-width: 58px;
+}

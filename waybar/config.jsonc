@@ -1,0 +1,185 @@
+{
+  "layer": "top",
+  "modules-left": ["custom/apps", "hyprland/workspaces"],
+  "modules-center": [],
+  "modules-right": [
+    "pulseaudio#input",
+    "pulseaudio#output",
+    "backlight",
+    "cpu",
+    "memory",
+    "temperature",
+    "battery",
+    "bluetooth",
+    "network",
+    "custom/docker",
+    "custom/spotify",
+    "custom/keyboard-layout",
+    "custom/notifications",
+    "clock",
+    "tray",
+    "custom/power",
+  ],
+
+  "custom/apps": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "rofi -show drun -disable-history",
+  },
+
+  "custom/notifications": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "",
+      "none": "",
+      "dnd-notification": "",
+      "dnd-none": "",
+      "inhibited-notification": "",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "",
+      "dnd-inhibited-none": "",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true,
+  },
+
+  "hyprland/workspaces": {
+    "active-only": false,
+    "tooltip": false,
+  },
+
+  "tray": {
+    "icon-size": 18,
+    "spacing": 12,
+  },
+
+  "clock": {
+    "format": "{:%a %Y-%m-%d [%R]}",
+    "tooltip": false,
+  },
+
+  "cpu": {
+    "format": "  {usage:>3}%",
+    "interval": 1,
+  },
+
+  "memory": {
+    "format": "  {percentage:>3}%",
+    "interval": 1,
+  },
+
+  "temperature": {
+    "thermal-zone": 2,
+    "critical-threshold": 80,
+    "format-critical": "󰸁 {temperatureC:>3}°C",
+    "format": "󰔏 {temperatureC:>3}°C",
+    "critical-treshold": 80,
+    "interval": 1,
+  },
+
+  "backlight": {
+    "format": "{icon}  {percent:>3}%",
+    "format-icons": ["", ""],
+    "on-scroll-down": "brightnessctl -c backlight set 5%-",
+    "on-scroll-up": "brightnessctl -c backlight set +5%",
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{icon} {capacity:>3}%",
+    "format-charging": " {capacity:>3}%",
+    "format-plugged": " {capacity:>3}%",
+    "format-icons": ["", "", "", "", ""],
+  },
+
+  "pulseaudio#output": {
+    "scroll-step": 1,
+    "tooltip": false,
+    "format": "{icon}  {volume:>3}%",
+    "format-bluetooth": "{icon} {volume:>3}%",
+    "format-muted": "   ---",
+    "format-icons": {
+      "headphones": "",
+      "headset": "",
+      "default": ["", ""],
+    },
+    "max-volume": 100,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +1%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -1%",
+  },
+
+  "pulseaudio#input": {
+    "tooltip": false,
+    "format-source": " {volume:>3}%",
+    "format-source-muted": "  ---",
+    "format": "{format_source}",
+    "max-volume": 100,
+    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+    "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +1%",
+    "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -1%",
+  },
+
+  "network": {
+    "on-click": "kitty -e impala",
+    "format-wifi": "{signalStrength}%  ",
+    "format-ethernet": "󰈀",
+    "format-linked": "No IP",
+    "format-disconnected": "⚠",
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "tooltip-format-wifi": "{essid}",
+  },
+
+  "bluetooth": {
+    "on-click": "blueman-manager",
+    "format": "{icon}",
+    "format-icons": {
+      "enabled": "",
+      "disabled": "󰂲",
+    },
+    "tooltip": false,
+  },
+
+  "custom/power": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/power-menu",
+  },
+
+  "custom/spotify": {
+    "format": " {icon} {text}",
+    "exec": "playerctl -p spotify metadata --format '{\"text\": \"[{{duration(position)}} - {{duration(mpris:length)}}]\", \"tooltip\": \"Artist: {{artist}}\\nTitle: {{title}}\\nAlbum: {{album}}\", \"class\": \"{{status}}\"}' -F",
+    "return-type": "json",
+    "on-click": "playerctl -p spotify play-pause",
+    "on-click-middle": "playerctl -p spotify previous",
+    "on-click-right": "playerctl -p spotify next",
+    "exec-if": "pgrep spotify",
+    "escape": true,
+  },
+
+  "custom/docker": {
+    "exec": "~/.config/waybar/scripts/docker-status",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "kitty -e lazydocker",
+    "on-click-right": "~/.config/waybar/scripts/docker-menu",
+    "tooltip": true,
+  },
+
+  "custom/keyboard-layout": {
+    "exec": "echo $(hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | awk '{print $1}')",
+    "interval": 5,
+    "format": "⌨ {}",
+    "tooltip": false,
+    "on-click": "~/.config/hypr/scripts/keyboard-layout",
+  },
+}

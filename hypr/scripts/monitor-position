@@ -1,0 +1,8 @@
+#!/bin/bash
+
+positions=("above: 0x-1080" "below: 0x1080" "left: -1920x0" "right: 1920x0")
+selected=$(printf "%s\n" "${positions[@]}" | rofi -dmenu -p "Monitor Position" | awk '{print $2}')
+
+[ -z "$selected" ] && exit
+
+hyprctl keyword monitor HDMI-A-1,1920x1080@60,$selected,1

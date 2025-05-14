@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Script to check for asdf updates on Hyprland startup
+
+# Get the latest version of asdf from GitHub
+LATEST_VERSION=$(curl --silent https://api.github.com/repos/asdf-vm/asdf/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+
+# Get the locally installed version of asdf
+LOCAL_VERSION=$(asdf -v | awk '{print $3}')
+
+# Compare versions (remove 'v' for numerical comparison)
+LATEST_NUM=$(echo "$LATEST_VERSION" | sed 's/v//')
+LOCAL_NUM=$(echo "$LOCAL_VERSION" | sed 's/v//')
+
+# Function to compare versions
+version_greater_than() {
+    test "$(printf '%s\n' "$1" "$2" | sort -V | head -n 1)" != "$1"
+}
+
+# Check if the local version is outdated
+if version_greater_than "$LATEST_NUM" "$LOCAL_NUM"; then
+    notify-send -u critical "asdf Update Available!" "Your version: $LOCAL_VERSION\nLatest version: $LATEST_VERSION\nPlease update asdf to the latest version."
+fi
