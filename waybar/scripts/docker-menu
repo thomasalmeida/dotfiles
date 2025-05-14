@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Check if Docker service is active
+if systemctl is-active --quiet docker; then
+    OPTIONS="Disable Docker"
+else
+    OPTIONS="Enable Docker"
+fi
+
+# Display Rofi menu and capture the selected option
+CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "Docker Control")
+
+# Execute the corresponding action in a terminal to handle password prompt
+case "$CHOICE" in
+    "Enable Docker")
+        kitty -e sudo systemctl enable docker && sudo systemctl start docker
+        ;;
+    "Disable Docker")
+        kitty -e ssudo systemctl disable docker && sudo systemctl stop docker
+        ;;
+    *)
+        exit 0
+        ;;
+esac

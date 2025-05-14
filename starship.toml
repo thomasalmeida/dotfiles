@@ -1,0 +1,19 @@
+add_newline = true
+
+format = """$directory$fill$git_branch$git_status$all$character"""
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style)"
+
+[fill]
+symbol = " "
+
+[cmd_duration]
+disabled = true
+
+[aws]
+disabled = true
+
+[line_break]
+disabled = false
