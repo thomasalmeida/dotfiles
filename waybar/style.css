@@ -51,7 +51,7 @@ window#waybar {
 
 /* App Launcher */
 #custom-apps {
-    background: @yellow;
+    background: @primary;
     color: @bg;
     font-weight: bold;
     padding: 0 10px;
@@ -78,20 +78,20 @@ window#waybar {
 }
 
 #workspaces button.active {
-    background: @yellow;
+    background: @primary;
     color: @bg;
-    border-color: @yellow;
+    border-color: @primary;
 }
 
 /* Module Specific Colors */
 #pulseaudio#input {
-    color: @orange;
+    color: @secondary;
 }
 #pulseaudio#output {
-    color: @purple;
+    color: @tertiary;
 }
 #backlight {
-    color: @yellow;
+    color: @primary;
 }
 #cpu {
     color: @warning;
@@ -103,16 +103,16 @@ window#waybar {
     color: @accent;
 }
 #battery {
-    color: @yellow;
+    color: @primary;
 }
 #network {
     color: @info;
 }
 #bluetooth {
-    color: @purple;
+    color: @tertiary;
 }
 #custom-notifications {
-    color: @purple;
+    color: @tertiary;
 }
 #custom-docker {
     color: @accent;
@@ -164,7 +164,7 @@ tooltip label {
 
 /* Battery States */
 #battery.warning {
-    color: @orange;
+    color: @secondary;
 }
 
 #battery.critical {

@@ -27,6 +27,6 @@
 @define-color warning @base08;
 @define-color success @base0B;
 @define-color info @base0D;
-@define-color purple @base0E;
-@define-color orange @base09;
-@define-color yellow @base0A;
+@define-color primary @base0A;
+@define-color secondary @base09;
+@define-color tertiary @base0E;
