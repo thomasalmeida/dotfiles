@@ -8,6 +8,7 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "theme": "Kanagawa Dragon",
+  "ui_font_family": "JetBrainsMono Nerd Font",
   "project_panel": {
     "dock": "right"
   },

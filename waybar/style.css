@@ -1,11 +1,11 @@
 @import "themes/Kanagawa-Dragon.css";
 
 * {
-    font-family: "Symbols Nerd Font Mono", "0xProto";
     font-size: 13px;
     min-height: 15px;
     border-radius: 0px;
     transition: background-color 0.5s;
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font Mono";
 }
 
 window#waybar {
