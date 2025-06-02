@@ -1,5 +1,6 @@
 {
   "layer": "top",
+  "spacing": 1,
   "modules-left": ["custom/apps", "hyprland/workspaces"],
   "modules-center": [],
   "modules-right": [
@@ -10,10 +11,10 @@
     "memory",
     "temperature",
     "battery",
+    "custom/spotify",
     "bluetooth",
     "network",
     "custom/docker",
-    "custom/spotify",
     "custom/keyboard-layout",
     "custom/notifications",
     "clock",
@@ -54,13 +55,26 @@
   },
 
   "tray": {
-    "icon-size": 18,
-    "spacing": 12,
+    "icon-size": 12,
+    "spacing": 8,
   },
 
   "clock": {
     "format": "{:%a %Y-%m-%d [%R]}",
-    "tooltip": false,
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#c4b28a'><b>{}</b></span>",
+        "days": "<span color='#c5c9c5'><b>{}</b></span>",
+        "weeks": "<span color='#8ea4a2'><b>W{}</b></span>",
+        "weekdays": "<span color='#8ba4b0'><b>{}</b></span>",
+        "today": "<span color='#e46876'><b><u>{}</u></b></span>",
+      },
+    },
   },
 
   "cpu": {
@@ -83,8 +97,8 @@
   },
 
   "backlight": {
-    "format": "{icon}  {percent:>3}%",
-    "format-icons": ["", ""],
+    "format": "{icon} {percent:>3}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
     "on-scroll-down": "brightnessctl -c backlight set 5%-",
     "on-scroll-up": "brightnessctl -c backlight set +5%",
   },
@@ -98,19 +112,19 @@
     "format": "{icon} {capacity:>3}%",
     "format-charging": " {capacity:>3}%",
     "format-plugged": " {capacity:>3}%",
-    "format-icons": ["", "", "", "", ""],
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
   },
 
   "pulseaudio#output": {
     "scroll-step": 1,
     "tooltip": false,
-    "format": "{icon}  {volume:>3}%",
+    "format": "{icon} {volume:>3}%",
     "format-bluetooth": "{icon} {volume:>3}%",
-    "format-muted": "   ---",
+    "format-muted": "󰸈 ---",
     "format-icons": {
-      "headphones": "",
-      "headset": "",
-      "default": ["", ""],
+      "headphones": "󰋋",
+      "headset": "󰋎",
+      "default": ["󰕿", "󰖀", "󰕾"],
     },
     "max-volume": 100,
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
@@ -120,8 +134,8 @@
 
   "pulseaudio#input": {
     "tooltip": false,
-    "format-source": " {volume:>3}%",
-    "format-source-muted": "  ---",
+    "format-source": "󰍬 {volume:>3}%",
+    "format-source-muted": "󰍭 ---",
     "format": "{format_source}",
     "max-volume": 100,
     "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
@@ -131,10 +145,10 @@
 
   "network": {
     "on-click": "kitty -e impala",
-    "format-wifi": "{signalStrength}%  ",
+    "format-wifi": "󰖩 {signalStrength}%",
     "format-ethernet": "󰈀",
-    "format-linked": "No IP",
     "format-disconnected": "⚠",
+    "format-linked": "󰈁",
     "tooltip-format": "{ifname} via {gwaddr}",
     "tooltip-format-wifi": "{essid}",
   },
@@ -143,20 +157,20 @@
     "on-click": "blueman-manager",
     "format": "{icon}",
     "format-icons": {
-      "enabled": "",
+      "enabled": "󰂯",
       "disabled": "󰂲",
     },
     "tooltip": false,
   },
 
   "custom/power": {
-    "format": "",
+    "format": "󰐥",
     "tooltip": false,
     "on-click": "~/.config/waybar/scripts/power-menu",
   },
 
   "custom/spotify": {
-    "format": " {icon} {text}",
+    "format": "󰓇 {icon} {text}",
     "exec": "playerctl -p spotify metadata --format '{\"text\": \"[{{duration(position)}} - {{duration(mpris:length)}}]\", \"tooltip\": \"Artist: {{artist}}\\nTitle: {{title}}\\nAlbum: {{album}}\", \"class\": \"{{status}}\"}' -F",
     "return-type": "json",
     "on-click": "playerctl -p spotify play-pause",
@@ -176,10 +190,9 @@
   },
 
   "custom/keyboard-layout": {
-    "exec": "echo $(hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | awk '{print $1}')",
-    "interval": 5,
-    "format": "⌨ {}",
+    "exec": "~/.config/waybar/scripts/keyboard-layout",
+    "interval": 3,
+    "format": "󰌌 {}",
     "tooltip": false,
-    "on-click": "~/.config/hypr/scripts/keyboard-layout",
   },
 }

@@ -7,14 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "theme": "Kanagawa Dragon",
+  "ui_font_family": "JetBrainsMono Nerd Font",
   "project_panel": {
     "dock": "right"
   },
   "ui_font_size": 15,
   "buffer_font_size": 13,
-  "theme": {
-    "mode": "system",
-    "light": "Rosé Pine",
-    "dark": "One Dark"
-  }
 }
