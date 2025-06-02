@@ -17,8 +17,8 @@
     "custom/docker",
     "custom/keyboard-layout",
     "custom/notifications",
-    "tray",
     "clock",
+    "tray",
     "custom/power",
   ],
 
