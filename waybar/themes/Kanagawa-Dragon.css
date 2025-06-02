@@ -1,0 +1,32 @@
+/* Kanagawa Dragon Authentic Palette */
+@define-color base00 #181616;
+@define-color base01 #0d0c0c;
+@define-color base02 #2d4f67;
+@define-color base03 #a6a69c;
+@define-color base04 #7fb4ca;
+@define-color base05 #c5c9c5;
+@define-color base06 #938aa9;
+@define-color base07 #c5c9c5;
+@define-color base08 #c4746e;
+@define-color base09 #e46876;
+@define-color base0A #c4b28a;
+@define-color base0B #8a9a7b;
+@define-color base0C #8ea4a2;
+@define-color base0D #8ba4b0;
+@define-color base0E #a292a3;
+@define-color base0F #7aa89f;
+
+/* Application Variables */
+@define-color bg @base00;
+@define-color bg-alt @base01;
+@define-color border @base02;
+@define-color fg @base05;
+@define-color fg-alt @base04;
+@define-color muted @base03;
+@define-color accent @base0C;
+@define-color warning @base08;
+@define-color success @base0B;
+@define-color info @base0D;
+@define-color purple @base0E;
+@define-color orange @base09;
+@define-color yellow @base0A;
