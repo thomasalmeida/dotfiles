@@ -1,20 +1,20 @@
 @import "themes/Kanagawa-Dragon.css";
 
+/* Global Styles */
 * {
-    font-size: 13px;
-    min-height: 15px;
-    border-radius: 0px;
-    transition: background-color 0.5s;
     font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font Mono";
+    font-size: 12px;
+    min-height: 0;
+    border-radius: 0;
 }
 
+/* Waybar Window */
 window#waybar {
     background-color: @bg;
-    border-bottom: 1px solid @border;
-    margin: 0;
-    padding: 0;
+    color: @fg;
 }
 
+/* Base Module Style */
 #custom-apps,
 #workspaces,
 #clock,
@@ -32,123 +32,183 @@ window#waybar {
 #custom-spotify,
 #custom-keyboard-layout,
 #custom-power {
-    background: @surface;
-    color: @text;
-    margin: 0 1px;
-    padding: 0 4px;
-    border: 1px solid @highlightMed;
+    background: @bg-alt;
+    color: @fg;
+    border: 1px solid @border;
+    margin: 2px 1px;
+    padding: 0 6px;
 }
 
-#pulseaudio#input {
-    color: @rose;
+/* Icon-only modules */
+#bluetooth,
+#network,
+#custom-notifications,
+#custom-power,
+#custom-docker {
+    min-width: 20px;
+    padding: 0 8px;
 }
-#pulseaudio#output {
-    color: @iris;
-}
-#backlight {
-    color: @gold;
-}
-#cpu {
-    color: @love;
-}
-#memory {
-    color: @pine;
-}
-#temperature {
-    color: @foam;
-}
-#network {
-    color: @foam;
-}
-#bluetooth {
-    color: @iris;
-}
-#battery {
-    color: @gold;
-}
-#custom-notifications {
-    color: @iris;
-}
-#clock {
-    color: @text;
+
+/* App Launcher */
+#custom-apps {
+    background: @yellow;
+    color: @bg;
     font-weight: bold;
-}
-#custom-spotify {
-    color: @iris;
-}
-#custom-keyboard-layout {
-    color: @pine;
+    padding: 0 10px;
+    margin-left: 4px;
+    border: none;
 }
 
+/* Workspaces */
 #workspaces {
     background: transparent;
-    padding: 0;
-    margin: 0 2px;
     border: none;
+    margin: 2px 4px;
+    padding: 0;
 }
 
 #workspaces button {
+    background: @bg-alt;
     color: @muted;
-    background: transparent;
-    padding: 0 8px;
-    border: 1px solid transparent;
-    transition: color 0.2s ease;
-    font-size: 14px;
+    border: 1px solid @border;
+    padding: 0 6px;
+    margin: 0 1px;
+    transition: all 0.2s ease;
+    min-width: 20px;
 }
 
 #workspaces button.active {
-    color: @foam;
-    background: @highlightMed;
-    border: 1px solid @pine;
-    border-radius: 1px;
+    background: @yellow;
+    color: @bg;
+    border-color: @yellow;
 }
 
-#workspaces button:hover {
-    color: @text;
-    background: @highlightHigh;
-    box-shadow: none;
+/* Module Specific Colors */
+#pulseaudio#input {
+    color: @orange;
 }
-
+#pulseaudio#output {
+    color: @purple;
+}
+#backlight {
+    color: @yellow;
+}
+#cpu {
+    color: @warning;
+}
+#memory {
+    color: @success;
+}
+#temperature {
+    color: @accent;
+}
+#battery {
+    color: @yellow;
+}
+#network {
+    color: @info;
+}
+#bluetooth {
+    color: @purple;
+}
+#custom-notifications {
+    color: @purple;
+}
 #custom-docker {
-    color: @foam;
+    color: @accent;
 }
-#custom-docker.docker-active {
-    color: @pine;
+#custom-spotify {
+    color: @success;
 }
-#custom-docker.docker-inactive {
-    color: @muted;
+#custom-keyboard-layout {
+    color: @info;
 }
-
-.warning,
-.critical {
-    animation: blink_red 1s linear infinite alternate;
+#custom-power {
+    color: @warning;
 }
 
-@keyframes blink_red {
+/* Clock */
+#clock {
+    background: @border;
+    color: @fg;
+    font-weight: bold;
+    padding: 0 12px;
+    margin: 2px 4px;
+}
+
+/* Tray */
+#tray {
+    background: transparent;
+    padding: 0 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* Tooltip */
+tooltip {
+    background-color: @bg-alt;
+    color: @fg;
+    border: 1px solid @border;
+    border-radius: 4px;
+}
+
+tooltip label {
+    color: @fg;
+}
+
+/* Battery States */
+#battery.warning {
+    color: @orange;
+}
+
+#battery.critical {
+    color: @warning;
+    animation: battery-blink 1s ease infinite alternate;
+}
+
+#battery.charging {
+    color: @success;
+}
+
+/* Temperature Critical */
+#temperature.critical {
+    color: @warning;
+    animation: temp-blink 2s ease infinite alternate;
+}
+
+/* Animations */
+@keyframes battery-blink {
     to {
-        background-color: @love;
-        color: @base;
+        background: alpha(@warning, 0.2);
     }
 }
 
-#custom-apps {
-    background: @foam;
-    color: @base;
-    padding: 0 5px;
-    border: none;
+@keyframes temp-blink {
+    to {
+        background: alpha(@warning, 0.1);
+    }
 }
 
-#tray {
-    padding: 0 2px;
-    border-left: none;
+/* Spotify States */
+#custom-spotify.playing {
+    color: @success;
 }
 
-#cpu,
-#memory,
-#temperature,
-#backlight,
-#battery,
-#pulseaudio-output,
-#pulseaudio-input {
-    min-width: 58px;
+#custom-spotify.paused {
+    color: @muted;
+}
+
+/* Docker States */
+#custom-docker.running {
+    color: @accent;
+}
+
+#custom-docker.stopped {
+    color: @muted;
 }

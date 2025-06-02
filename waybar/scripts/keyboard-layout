@@ -1,0 +1,15 @@
+#!/bin/bash
+
+layout=$(hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap')
+
+case "$layout" in
+    "Portuguese (Brazil)")
+        echo "pt BR"
+        ;;
+    "English (US, intl., with dead keys)")
+        echo "en US"
+        ;;
+    *)
+        echo "${layout:0:2}" | tr '[:upper:]' '[:lower:]'
+        ;;
+esac
