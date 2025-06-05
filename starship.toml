@@ -4,7 +4,7 @@ format = """$directory$fill$git_branch$git_status$all$character"""
 
 [git_branch]
 symbol = " "
-format = "[$symbol$branch]($style)"
+format = "[$symbol$branch]($style) "
 
 [fill]
 symbol = " "
