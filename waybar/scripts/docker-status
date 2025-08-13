@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if systemctl is-active --quiet docker; then
-    echo '{"text": "󰡨", "tooltip": "Docker: Running", "class": "docker-active"}'
+    echo '{"text": "󰡨", "tooltip": "Docker: Running", "class": "active"}'
 else
-    echo '{"text": "󰡨", "tooltip": "Docker: Stopped", "class": "docker-inactive"}'
+    echo '{"text": "󰡨", "tooltip": "Docker: Stopped", "class": "inactive"}'
 fi

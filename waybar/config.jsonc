@@ -4,6 +4,7 @@
   "modules-left": ["custom/apps", "hyprland/workspaces"],
   "modules-center": [],
   "modules-right": [
+    "custom/spotify",
     "pulseaudio#input",
     "pulseaudio#output",
     "backlight",
@@ -11,7 +12,6 @@
     "memory",
     "temperature",
     "battery",
-    "custom/spotify",
     "bluetooth",
     "network",
     "custom/docker",
@@ -23,12 +23,14 @@
   ],
 
   "custom/apps": {
+    "cursor": false,
     "format": "",
     "tooltip": false,
     "on-click": "rofi -show drun -disable-history",
   },
 
   "custom/notifications": {
+    "cursor": false,
     "tooltip": false,
     "format": "{icon}",
     "format-icons": {
@@ -60,8 +62,9 @@
   },
 
   "clock": {
+    "cursor": false,
     "format": "{:%a %Y-%m-%d [%R]}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "tooltip-format": "<span size='large'><tt>{calendar}</tt></span>",
     "calendar": {
       "mode": "year",
       "mode-mon-col": 3,
@@ -74,6 +77,11 @@
         "weekdays": "<span color='#8ba4b0'><b>{}</b></span>",
         "today": "<span color='#e46876'><b><u>{}</u></b></span>",
       },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
     },
   },
 
@@ -116,6 +124,7 @@
   },
 
   "pulseaudio#output": {
+    "cursor": false,
     "scroll-step": 1,
     "tooltip": false,
     "format": "{icon} {volume:>3}%",
@@ -133,6 +142,7 @@
   },
 
   "pulseaudio#input": {
+    "cursor": false,
     "tooltip": false,
     "format-source": "󰍬 {volume:>3}%",
     "format-source-muted": "󰍭 ---",
@@ -144,6 +154,7 @@
   },
 
   "network": {
+    "cursor": false,
     "on-click": "kitty -e impala",
     "format-wifi": "󰖩 {signalStrength}%",
     "format-ethernet": "󰈀",
@@ -154,6 +165,7 @@
   },
 
   "bluetooth": {
+    "cursor": false,
     "on-click": "blueman-manager",
     "format": "{icon}",
     "format-icons": {
@@ -164,12 +176,14 @@
   },
 
   "custom/power": {
+    "cursor": false,
     "format": "󰐥",
     "tooltip": false,
     "on-click": "~/.config/waybar/scripts/power-menu",
   },
 
   "custom/spotify": {
+    "cursor": false,
     "format": "󰓇 {icon} {text}",
     "exec": "playerctl -p spotify metadata --format '{\"text\": \"[{{duration(position)}} - {{duration(mpris:length)}}]\", \"tooltip\": \"Artist: {{artist}}\\nTitle: {{title}}\\nAlbum: {{album}}\", \"class\": \"{{status}}\"}' -F",
     "return-type": "json",
@@ -181,6 +195,7 @@
   },
 
   "custom/docker": {
+    "cursor": false,
     "exec": "~/.config/waybar/scripts/docker-status",
     "return-type": "json",
     "interval": 5,
@@ -190,6 +205,7 @@
   },
 
   "custom/keyboard-layout": {
+    "cursor": false,
     "exec": "~/.config/waybar/scripts/keyboard-layout",
     "interval": 3,
     "format": "󰌌 {}",
