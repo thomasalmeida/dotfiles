@@ -18,4 +18,4 @@
 
 # Keep ignoring
 fish/fish_variables
-hypr/states.conf
+hypr/state.conf

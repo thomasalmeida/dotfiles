@@ -3,6 +3,7 @@
     font-size: 16px;
     font-family: "JetBrainsMono Nerd Font";
     transition: 200ms;
+    background: transparent;
 }
 
 trough highlight {
