@@ -13,10 +13,12 @@ CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "Docker Control")
 # Execute the corresponding action in a terminal to handle password prompt
 case "$CHOICE" in
     "Enable Docker")
-        kitty -e sudo systemctl enable docker && sudo systemctl start docker
+        # kitty -e sudo systemctl enable docker
+        kitty -e sudo systemctl start docker
         ;;
     "Disable Docker")
-        kitty -e ssudo systemctl disable docker && sudo systemctl stop docker
+        # kitty -e sudo systemctl disable docker 
+        kitty -e sudo systemctl stop docker
         ;;
     *)
         exit 0
