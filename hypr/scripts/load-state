@@ -1,0 +1,18 @@
+#!/bin/bash
+
+STATE_FILE="$HOME/.config/hypr/state.conf"
+
+[[ ! -f "$STATE_FILE" ]] && exit 0
+
+source "$STATE_FILE"
+
+# Set keyboard to desired layout if needed
+CURRENT=$(hyprctl devices -j | jq -r '.keyboards[0].active_keymap' | head -c 2)
+DESIRED=${KEYBOARD_LAYOUT%%,*}
+
+if [[ "$DESIRED" != "${CURRENT,,}" ]] && [[ "$DESIRED" != "${CURRENT:0:2}" ]]; then
+    hyprctl switchxkblayout all next
+fi
+
+# Apply monitor position
+hyprctl keyword monitor HDMI-A-1,1920x1080@60,${MONITOR_POSITION:-0x-1080},1

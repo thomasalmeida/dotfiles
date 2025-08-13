@@ -1,0 +1,27 @@
+#!/bin/bash
+
+STATE_FILE="$HOME/.config/hypr/state.conf"
+
+# Toggle keyboard layout
+hyprctl switchxkblayout all next
+
+# Get new active layout
+CURRENT=$(hyprctl devices -j | jq -r '.keyboards[0].active_keymap' | head -c 2)
+
+# Determine new layout order based on what's active
+if [[ "$CURRENT" == "br" ]] || [[ "$CURRENT" == "Br" ]]; then
+    LAYOUT="br,us"
+    VARIANT="abnt2,intl"
+else
+    LAYOUT="us,br"
+    VARIANT="intl,abnt2"
+fi
+
+# Save state
+grep -q "KEYBOARD_LAYOUT=" "$STATE_FILE" 2>/dev/null && \
+    sed -i "s/KEYBOARD_LAYOUT=.*/KEYBOARD_LAYOUT=\"$LAYOUT\"/" "$STATE_FILE" || \
+    echo "KEYBOARD_LAYOUT=\"$LAYOUT\"" >> "$STATE_FILE"
+
+grep -q "KEYBOARD_VARIANT=" "$STATE_FILE" 2>/dev/null && \
+    sed -i "s/KEYBOARD_VARIANT=.*/KEYBOARD_VARIANT=\"$VARIANT\"/" "$STATE_FILE" || \
+    echo "KEYBOARD_VARIANT=\"$VARIANT\"" >> "$STATE_FILE"

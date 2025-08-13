@@ -1,8 +1,21 @@
 #!/bin/bash
 
+STATE_FILE="$HOME/.config/hypr/state.conf"
+MONITORS_CONF="$HOME/.config/hypr/hyprland/monitors.conf"
+
 positions=("above: 0x-1080" "below: 0x1080" "left: -1920x0" "right: 1920x0")
 selected=$(printf "%s\n" "${positions[@]}" | rofi -dmenu -p "Monitor Position" | awk '{print $2}')
 
-[ -z "$selected" ] && exit
+[[ -z "$selected" ]] && exit
 
+# Apply and save
 hyprctl keyword monitor HDMI-A-1,1920x1080@60,$selected,1
+
+grep -q "MONITOR_POSITION=" "$STATE_FILE" 2>/dev/null && \
+    sed -i "s/MONITOR_POSITION=.*/MONITOR_POSITION=\"$selected\"/" "$STATE_FILE" || \
+    echo "MONITOR_POSITION=\"$selected\"" >> "$STATE_FILE"
+
+cat > "$MONITORS_CONF" << EOF
+monitor = eDP-1, 1920x0@144, 0x0, 1
+monitor = HDMI-A-1, 1920x1080@60, $selected, 1
+EOF
