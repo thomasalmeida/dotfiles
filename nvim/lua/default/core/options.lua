@@ -3,7 +3,6 @@
 -- vim.cmd("let g:netrw_liststyle = 3")
 vim.cmd("let g:netrw_banner = 0 ")
 
-vim.opt.guicursor = ""
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
@@ -47,7 +46,7 @@ vim.opt.splitbelow = true --split horizontal window to the bottom
 
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "120"
 
 -- clipboard
 vim.opt.clipboard:append("unnamedplus") --use system clipboard as default
