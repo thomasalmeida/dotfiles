@@ -1,18 +1,61 @@
 #!/bin/bash
 
-STATE_FILE="$HOME/.config/hypr/state.conf"
+CONFIG_DIR="$HOME/.config/hypr"
+STATE_FILE="$CONFIG_DIR/state.conf"
+INPUT_CONF="$CONFIG_DIR/hyprland/input.conf"
+MONITORS_CONF="$CONFIG_DIR/hyprland/monitors.conf"
 
-[[ ! -f "$STATE_FILE" ]] && exit 0
+# Create state.conf if missing
+create_state_config() {
+    [[ -f "$STATE_FILE" ]] && return
 
+    # Extract layouts from input.conf
+    local layouts=$(awk -F= '/kb_layout/ {gsub(/[ \047]/, "", $2); print $2}' "$INPUT_CONF")
+
+    # Extract HDMI position from monitors.conf
+    local monitor_pos=$(awk -F'[,@]' '/HDMI-A-1/ {print $3}' "$MONITORS_CONF")
+
+    # Create state file with default values
+    printf "KEYBOARD_LAYOUT=\"%s\"\n" "$layouts" > "$STATE_FILE"
+    printf "MONITOR_POSITION=\"%s\"\n" "${monitor_pos:-1920x0}" >> "$STATE_FILE"
+}
+
+# Get current keyboard layout code
+get_current_layout() {
+    local layout_name=$(hyprctl devices -j | jq -r '.keyboards[0].active_keymap')
+
+    # Map full layout names to codes
+    case "$layout_name" in
+        *English*) echo "us" ;;
+        *Portuguese*) echo "br" ;;
+        *)
+            # Fallback: use first 2 characters lowercase
+            echo "${layout_name:0:2}" | tr '[:upper:]' '[:lower:]'
+            ;;
+    esac
+}
+
+# Apply the first keyboard layout from state
+apply_keyboard_layout() {
+    local target_layout=$(echo "$KEYBOARD_LAYOUT" | cut -d, -f1)
+    local current_layout=$(get_current_layout)
+
+    if [[ "$target_layout" != "$current_layout" ]]; then
+        hyprctl switchxkblayout all next
+        echo "Switched keyboard layout to: $target_layout"
+    else
+        echo "Keyboard layout already correct: $current_layout"
+    fi
+}
+
+# Apply monitor position from state
+apply_monitor_position() {
+    hyprctl keyword monitor HDMI-A-1,1920x1080@60,${MONITOR_POSITION},1
+    echo "Applied monitor position: $MONITOR_POSITION"
+}
+
+# Main execution flow
+create_state_config
 source "$STATE_FILE"
-
-# Set keyboard to desired layout if needed
-CURRENT=$(hyprctl devices -j | jq -r '.keyboards[0].active_keymap' | head -c 2)
-DESIRED=${KEYBOARD_LAYOUT%%,*}
-
-if [[ "$DESIRED" != "${CURRENT,,}" ]] && [[ "$DESIRED" != "${CURRENT:0:2}" ]]; then
-    hyprctl switchxkblayout all next
-fi
-
-# Apply monitor position
-hyprctl keyword monitor HDMI-A-1,1920x1080@60,${MONITOR_POSITION:-0x-1080},1
+apply_keyboard_layout
+apply_monitor_position
