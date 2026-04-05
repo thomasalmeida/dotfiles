@@ -199,8 +199,7 @@
     "exec": "~/.config/waybar/scripts/docker-status",
     "return-type": "json",
     "interval": 5,
-    "on-click": "kitty -e lazydocker",
-    "on-click-right": "~/.config/waybar/scripts/docker-menu",
+    "on-click": "~/.config/waybar/scripts/docker-menu",
     "tooltip": true,
   },
 

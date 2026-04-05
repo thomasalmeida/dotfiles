@@ -2,13 +2,15 @@
 
 # Check if Docker service is active
 if systemctl is-active --quiet docker; then
-    OPTIONS="Disable Docker"
+    DOCKER_ACTION="Disable Docker"
 else
-    OPTIONS="Enable Docker"
+    DOCKER_ACTION="Enable Docker"
 fi
 
+OPTIONS="$DOCKER_ACTION\nOpen LazyDocker"
+
 # Display Rofi menu and capture the selected option
-CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "Docker Control")
+CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "Docker Control" -i)
 
 # Execute the corresponding action in a terminal to handle password prompt
 case "$CHOICE" in
@@ -17,8 +19,11 @@ case "$CHOICE" in
         kitty -e sudo systemctl start docker
         ;;
     "Disable Docker")
-        # kitty -e sudo systemctl disable docker 
+        # kitty -e sudo systemctl disable docker
         kitty -e sudo systemctl stop docker
+        ;;
+    "Open LazyDocker")
+        kitty -e lazydocker
         ;;
     *)
         exit 0
